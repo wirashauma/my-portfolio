@@ -1,102 +1,136 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { GitHubContributionData, APISuccessResponse, APIErrorResponse } from '@/app/lib/types';
 
-interface ContributionData {
-  totalContributions: number;
-  user: {
-    login: string;
-    name: string;
-    avatarUrl: string;
-  };
-  contributionCollection: {
-    contributionCalendar: {
-      totalContributions: number;
-      weeks: Array<{
-        contributionDays: Array<{
-          date: string;
-          contributionCount: number;
-        }>;
-      }>;
-    };
-  };
-}
+// Revalidate every 1 hour (3600 seconds) for ISR
+export const revalidate = 3600;
 
-export async function GET(request: NextRequest) {
-  try {
-    const token = process.env.GITHUB_TOKEN;
+const GITHUB_GRAPHQL_ENDPOINT = 'https://api.github.com/graphql';
 
-    if (!token) {
-      return NextResponse.json(
-        { error: 'GITHUB_TOKEN is not configured' },
-        { status: 500 }
-      );
-    }
-
-    const query = `
-      query {
-        viewer {
-          login
-          name
-          avatarUrl
-          contributionsCollection {
-            contributionCalendar {
-              totalContributions
-              weeks {
-                contributionDays {
-                  date
-                  contributionCount
-                }
-              }
+const GITHUB_QUERY = `
+  query {
+    viewer {
+      login
+      name
+      avatarUrl
+      bio
+      company
+      location
+      websiteUrl
+      twitterUsername
+      contributionsCollection {
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              date
+              contributionCount
+              level
             }
           }
         }
       }
-    `;
+    }
+  }
+`;
 
-    const response = await fetch('https://api.github.com/graphql', {
+export async function GET(): Promise<
+  NextResponse<APISuccessResponse<GitHubContributionData> | APIErrorResponse>
+> {
+  const timestamp = new Date().toISOString();
+
+  try {
+    const token = process.env.GITHUB_TOKEN;
+
+    if (!token) {
+      console.error('GITHUB_TOKEN environment variable is not set');
+      return NextResponse.json(
+        {
+          error: 'GitHub token is not configured',
+          timestamp,
+        } as APIErrorResponse,
+        { status: 500 }
+      );
+    }
+
+    const response = await fetch(GITHUB_GRAPHQL_ENDPOINT, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query: GITHUB_QUERY }),
+      // Ensure fresh data on each fetch
+      next: { revalidate: 0 },
     });
 
     if (!response.ok) {
+      console.error(`GitHub API returned status ${response.status}`);
       return NextResponse.json(
-        { error: 'Failed to fetch from GitHub API' },
+        {
+          error: `GitHub API error: ${response.statusText}`,
+          timestamp,
+        } as APIErrorResponse,
         { status: response.status }
       );
     }
 
     const data = await response.json();
 
+    // Check for GraphQL errors
     if (data.errors) {
+      console.error('GraphQL error:', data.errors);
       return NextResponse.json(
-        { error: 'GraphQL error', details: data.errors },
+        {
+          error: 'Failed to fetch GitHub data',
+          details: data.errors,
+          timestamp,
+        } as APIErrorResponse,
         { status: 400 }
       );
     }
 
-    const { viewer } = data.data;
-    const { contributionCalendar } = viewer.contributionsCollection;
+    const viewer = data.data?.viewer;
+    if (!viewer) {
+      throw new Error('No viewer data returned from GitHub API');
+    }
 
-    const contributionData: ContributionData = {
-      totalContributions: contributionCalendar.totalContributions,
+    const contributionData: GitHubContributionData = {
       user: {
         login: viewer.login,
         name: viewer.name,
         avatarUrl: viewer.avatarUrl,
+        bio: viewer.bio,
+        company: viewer.company,
+        location: viewer.location,
+        websiteUrl: viewer.websiteUrl,
+        twitterUsername: viewer.twitterUsername,
       },
+      totalContributions: viewer.contributionsCollection.contributionCalendar.totalContributions,
       contributionCollection: {
-        contributionCalendar,
+        contributionCalendar: viewer.contributionsCollection.contributionCalendar,
       },
     };
 
-    return NextResponse.json(contributionData);
-  } catch (error) {
-    console.error('GitHub API error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      {
+        data: contributionData,
+        timestamp,
+      } as APISuccessResponse<GitHubContributionData>,
+      {
+        status: 200,
+        headers: {
+          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        },
+      }
+    );
+  } catch (error) {
+    console.error('GitHub API route error:', error);
+    return NextResponse.json(
+      {
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : 'Unknown error',
+        timestamp,
+      } as APIErrorResponse,
       { status: 500 }
     );
   }
