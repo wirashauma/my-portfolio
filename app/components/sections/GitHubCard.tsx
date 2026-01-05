@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import type { GitHubCardProps } from '@/app/lib/types';
 import { GitHubCardSkeleton } from '@/app/components/ui/Skeleton';
+import { ContributionCalendar } from './ContributionCalendar';
 
 /**
  * GitHubCard Component
@@ -228,6 +229,16 @@ export function GitHubCard({ data, isLoading, isError }: GitHubCardProps) {
             </a>
           )}
         </motion.div>
+
+        {/* Contribution Calendar */}
+        {data?.contributionCollection.contributionCalendar && (
+          <motion.div variants={itemVariants} className="pt-6 border-t border-gray-200 dark:border-gray-800">
+            <ContributionCalendar
+              weeks={data.contributionCollection.contributionCalendar.weeks}
+              userName={user.login}
+            />
+          </motion.div>
+        )}
       </div>
     </motion.div>
   );

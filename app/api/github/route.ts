@@ -24,7 +24,6 @@ const GITHUB_QUERY = `
             contributionDays {
               date
               contributionCount
-              level
             }
           }
         }

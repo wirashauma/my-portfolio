@@ -16,7 +16,6 @@ export interface GitHubUser {
 export interface ContributionDay {
   date: string;
   contributionCount: number;
-  level: 'NONE' | 'FIRST_QUARTILE' | 'SECOND_QUARTILE' | 'THIRD_QUARTILE' | 'FOURTH_QUARTILE';
 }
 
 export interface ContributionWeek {
