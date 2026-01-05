@@ -17,6 +17,15 @@ const GITHUB_QUERY = `
       location
       websiteUrl
       twitterUsername
+      followers {
+        totalCount
+      }
+      following {
+        totalCount
+      }
+      repositoriesContributedTo(first: 1) {
+        totalCount
+      }
       contributionsCollection {
         contributionCalendar {
           totalContributions
@@ -105,6 +114,8 @@ export async function GET(): Promise<
         twitterUsername: viewer.twitterUsername,
       },
       totalContributions: viewer.contributionsCollection.contributionCalendar.totalContributions,
+      followers: viewer.followers.totalCount,
+      following: viewer.following.totalCount,
       contributionCollection: {
         contributionCalendar: viewer.contributionsCollection.contributionCalendar,
       },

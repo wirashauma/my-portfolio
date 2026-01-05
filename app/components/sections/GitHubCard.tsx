@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import type { GitHubCardProps } from '@/app/lib/types';
 import { GitHubCardSkeleton } from '@/app/components/ui/Skeleton';
-import { ContributionCalendar } from './ContributionCalendar';
+import { ContributionCalendar } from '@/app/components/sections/ContributionCalendar';
 
 /**
  * GitHubCard Component
@@ -60,18 +60,6 @@ export function GitHubCard({ data, isLoading, isError }: GitHubCardProps) {
     }),
     []
   );
-
-  // Generate a stable follower count based on user ID hash
-  const followerCount = useMemo(() => {
-    if (!data) return 100;
-    // Create a stable "random" number based on username hash
-    let hash = 0;
-    for (let i = 0; i < data.user.login.length; i++) {
-      hash = ((hash << 5) - hash) + data.user.login.charCodeAt(i);
-      hash = hash & hash; // Convert to 32bit integer
-    }
-    return Math.abs(hash % 900) + 100; // Returns 100-999
-  }, [data]);
 
   // Loading state
   if (isLoading) {
@@ -179,7 +167,7 @@ export function GitHubCard({ data, isLoading, isError }: GitHubCardProps) {
               </span>
             </div>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">
-              {followerCount}
+              {data?.followers?.toLocaleString() || '0'}
             </p>
           </div>
         </motion.div>

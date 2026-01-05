@@ -34,6 +34,8 @@ export interface ContributionCollection {
 export interface GitHubContributionData {
   user: GitHubUser;
   totalContributions: number;
+  followers: number;
+  following: number;
   contributionCollection: ContributionCollection;
 }
 
