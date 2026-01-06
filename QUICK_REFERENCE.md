@@ -1,23 +1,29 @@
-# Quick Reference Guide
+# 🚀 Quick Reference Card - Portfolio
 
-## 📝 Common Tasks
+## ✅ Files Created
 
-### Adding a New API Route
+```
+✨ app/components/ScrollReveal.tsx (149 lines)
+   └── Reusable animation components
 
-1. **Create the directory**:
-   ```bash
-   mkdir -p app/api/feature-name
-   ```
+🎨 app/page.tsx (582 lines)  
+   └── Complete portfolio with 6 sections
+```
 
-2. **Create `route.ts`**:
-   ```typescript
-   // app/api/feature-name/route.ts
-   import { NextResponse } from 'next/server';
-   
-   export const revalidate = 3600; // ISR
-   
-   export async function GET() {
-     try {
+## 📸 Image Setup (5 minutes)
+
+```bash
+# Create folder
+mkdir public/projects -Force    # Windows
+mkdir -p public/projects        # macOS/Linux
+
+# Copy 3 files there:
+# sumatrans-screenshot.png      (9:16 portrait)
+# barasiah-screenshot.png       (9:16 portrait)
+# education-system.png          (16:9 landscape)
+```
+
+## 🎨 Update Your Info (10 minutes)
        const data = await fetchData();
        return NextResponse.json({ data }, {
          headers: {
