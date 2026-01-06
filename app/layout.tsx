@@ -18,11 +18,11 @@ export const metadata: Metadata = {
   keywords: ["portfolio", "frontend", "developer", "next.js", "react", "typescript"],
   authors: [
     {
-      name: "Your Name",
-      url: "https://github.com/yourusername",
+      name: "Wirashauma",
+      url: "https://github.com/wirashauma",
     },
   ],
-  creator: "Your Name",
+  creator: "Wira Shauma Ardhana",
   metadataBase: new URL("https://your-portfolio.com"),
   openGraph: {
     type: "website",
