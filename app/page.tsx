@@ -228,19 +228,19 @@ function ExperienceSection() {
     {
       title: 'Frontend Developer',
       company: 'Dinas Pendidikan Bukittinggi',
-      period: '2024 - Present',
+      period: '2025 - Present',
       description:
         'Developed and maintained a comprehensive education management system using React and Next.js, improving administrative efficiency by 40%.',
-      technologies: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
+      technologies: ['React Native', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
       icon: Briefcase,
     },
     {
       title: 'Mobile Engineer',
       company: 'Barasiah App',
-      period: '2023 - 2024',
+      period: '2025 - Present',
       description:
         'Built a feature-rich cleaning service marketplace using Flutter and React Native, handling real-time notifications and payments integration.',
-      technologies: ['Flutter', 'React Native', 'Firebase', 'Supabase', 'Node.js'],
+      technologies: ['Flutter', 'Supabase', 'Node.js'],
       icon: Zap,
     },
   ];
@@ -518,7 +518,7 @@ function ContactSection() {
         <StaggerContainer staggerDelay={0.1}>
           <StaggerItem>
             <motion.a
-              href="mailto:your@email.com"
+              href="mailto:wirashauma@gmail.com"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all mb-8"
