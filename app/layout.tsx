@@ -13,12 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "My Portfolio | Frontend Developer",
-  description: "High-performance personal portfolio showcasing projects, skills, and open-source contributions built with Next.js 14+, TypeScript, and Tailwind CSS.",
-  keywords: ["portfolio", "frontend", "developer", "next.js", "react", "typescript"],
+  title: "Wira Shauma | Mobile Engineer & Full-Stack Developer",
+  description: "Portfolio showcasing mobile and web development projects. Specialized in Flutter, React Native, Next.js, and Node.js.",
+  keywords: ["portfolio", "mobile developer", "flutter", "react native", "next.js", "full-stack"],
   authors: [
     {
-      name: "Wirashauma",
+      name: "Wira Shauma",
       url: "https://github.com/wirashauma",
     },
   ],
@@ -28,24 +28,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://your-portfolio.com",
-    siteName: "My Portfolio",
-    title: "My Portfolio | Frontend Developer",
-    description: "High-performance personal portfolio showcasing projects, skills, and open-source contributions.",
+    siteName: "Wira Shauma Portfolio",
+    title: "Wira Shauma | Mobile Engineer & Full-Stack Developer",
+    description: "Portfolio showcasing mobile and web development projects.",
     images: [
       {
         url: "https://your-portfolio.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "My Portfolio",
+        alt: "Wira Shauma Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "My Portfolio | Frontend Developer",
-    description: "High-performance personal portfolio showcasing projects, skills, and open-source contributions.",
+    title: "Wira Shauma | Mobile Engineer & Full-Stack Developer",
+    description: "Portfolio showcasing mobile and web development projects.",
     images: ["https://your-portfolio.com/og-image.png"],
-    creator: "@yourtwitter",
+    creator: "@wirashauma",
   },
   robots: {
     index: true,
