@@ -23,7 +23,7 @@ function Navigation() {
           </Link>
           <Link
             href="/experience"
-            className="text-gray-700 hover:text-emerald-600 font-medium transition font-bold text-emerald-600"
+            className="text-emerald-600 font-bold transition hover:text-emerald-700"
           >
             Experience
           </Link>
@@ -91,7 +91,7 @@ function ExperienceSection() {
         </ScrollReveal>
 
         <StaggerContainer staggerDelay={0.25}>
-          {experiences.map((exp, index) => (
+          {experiences.map((exp) => (
             <StaggerItem key={exp.id}>
               <motion.div
                 whileHover={{ x: 8 }}
@@ -287,7 +287,7 @@ function CTASection() {
         <ScrollReveal>
           <h2 className="text-3xl font-bold text-white mb-6">Interested in Working Together?</h2>
           <p className="text-gray-300 mb-8">
-            Let's discuss how I can help bring your project to life
+            Let&apos;s discuss how I can help bring your project to life
           </p>
 
           <motion.a
