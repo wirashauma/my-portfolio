@@ -473,9 +473,9 @@ function WebProjectsSection() {
 function ProjectsSection() {
   return (
     <section id="projects" className="w-full bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <ScrollReveal>
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
+          <h2 className="text-4xl font-bold text-gray-900 mb-3 text-center">
             Projects
           </h2>
         </ScrollReveal>

@@ -40,17 +40,15 @@ function SafeProjectImage({ src, alt, className }: { src: string; alt: string; c
 }
 
 /**
- * Navigation Component
+ * Navigation Component - Static (No Scroll Tracking)
  */
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(sectionId);
       setIsOpen(false);
     }
   };
@@ -63,14 +61,14 @@ function Navigation() {
           <span className="text-emerald-600">shauma</span>
         </div>
 
-        {/* Desktop Menu */}
+        {/* Desktop Menu - Static, Always Show "Projects" as Active */}
         <div className="hidden md:flex items-center gap-8">
           {['home', 'experience', 'projects', 'about', 'contact'].map((item) => (
             <button
               key={item}
               onClick={() => scrollToSection(item)}
               className={`capitalize font-medium transition ${
-                activeSection === item
+                item === 'projects'
                   ? 'text-emerald-600 font-bold'
                   : 'text-gray-700 hover:text-emerald-600'
               }`}
@@ -97,7 +95,11 @@ function Navigation() {
               <button
                 key={item}
                 onClick={() => scrollToSection(item)}
-                className="block w-full text-left px-4 py-2 capitalize font-medium text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition"
+                className={`block w-full text-left px-4 py-2 capitalize font-medium transition ${
+                  item === 'projects'
+                    ? 'text-emerald-600 font-bold bg-emerald-50'
+                    : 'text-gray-700 hover:text-emerald-600 hover:bg-emerald-50'
+                } rounded-lg`}
               >
                 {item}
               </button>
@@ -473,9 +475,9 @@ function WebProjectsSection() {
 function ProjectsSection() {
   return (
     <section id="projects" className="w-full bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <ScrollReveal>
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
+          <h2 className="text-4xl font-bold text-gray-900 mb-3 text-center">
             Projects
           </h2>
         </ScrollReveal>

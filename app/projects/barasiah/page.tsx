@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ScrollReveal, StaggerItem } from '../../components/ScrollReveal';
 
 /**
- * Navigation Component
+ * Navigation Component - Static Header
  */
 function Navigation() {
   return (
@@ -19,21 +19,31 @@ function Navigation() {
 
         <div className="hidden md:flex items-center gap-8">
           <Link href="/" className="text-gray-700 hover:text-emerald-600 font-medium transition">
-            Home
+            home
+          </Link>
+          <Link href="/#experience" className="text-gray-700 hover:text-emerald-600 font-medium transition">
+            experience
           </Link>
           <Link
-            href="/projects"
-            className="text-gray-700 hover:text-emerald-600 font-medium transition"
+            href="/#projects"
+            className="text-emerald-600 font-medium transition"
           >
-            Projects
+            projects
           </Link>
-          <Link
-            href="/experience"
-            className="text-gray-700 hover:text-emerald-600 font-medium transition"
-          >
-            Experience
+          <Link href="/#about" className="text-gray-700 hover:text-emerald-600 font-medium transition">
+            about
+          </Link>
+          <Link href="/#contact" className="text-gray-700 hover:text-emerald-600 font-medium transition">
+            contact
           </Link>
         </div>
+
+        <Link
+          href="/"
+          className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition font-medium"
+        >
+          Back to Portfolio
+        </Link>
       </div>
     </nav>
   );
