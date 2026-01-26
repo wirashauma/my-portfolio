@@ -15,6 +15,7 @@ import {
 import { GitHubCalendar } from 'react-github-calendar';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../components/ScrollReveal';
 import { Skeleton } from '../components/ui/Skeleton';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface StatCardProps {
   title: string;
@@ -143,6 +144,7 @@ function LanguageBar({ languages }: { languages: WakaTimeData['languages'] }) {
 }
 
 export default function DashboardPage() {
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(true);
   const [githubStats, setGithubStats] = useState({
     total: 0,
@@ -173,9 +175,9 @@ export default function DashboardPage() {
         {/* Header */}
         <ScrollReveal>
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Dashboard</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">{t.dashboard.title}</h1>
             <p className="text-gray-600">
-              My personal dashboard built with Next.js API routes, visualizing development statistics and contributions in real-time.
+              {t.dashboard.subtitle}
             </p>
           </div>
         </ScrollReveal>
@@ -189,7 +191,7 @@ export default function DashboardPage() {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
                 <Github className="w-5 h-5 text-gray-700" />
-                <h2 className="text-xl font-bold text-gray-900">GitHub Contributions</h2>
+                <h2 className="text-xl font-bold text-gray-900">{t.dashboard.githubContributions}</h2>
               </div>
               <a
                 href={`https://github.com/${githubUsername}`}
@@ -200,7 +202,7 @@ export default function DashboardPage() {
                 @{githubUsername}
               </a>
             </div>
-            <p className="text-gray-500 text-sm mb-6">My GitHub activity over the past year.</p>
+            <p className="text-gray-500 text-sm mb-6">{t.dashboard.githubSubtitle}</p>
 
             {/* Stats Cards */}
             <StaggerContainer staggerDelay={0.1}>
@@ -216,30 +218,30 @@ export default function DashboardPage() {
                   <>
                     <StaggerItem>
                       <StatCard
-                        title="Total"
+                        title={t.dashboard.total}
                         value={githubStats.total}
                         icon={<TrendingUp className="w-5 h-5" />}
                       />
                     </StaggerItem>
                     <StaggerItem>
                       <StatCard
-                        title="This week"
+                        title={t.dashboard.thisWeek}
                         value={githubStats.thisWeek}
                         icon={<Calendar className="w-5 h-5" />}
                       />
                     </StaggerItem>
                     <StaggerItem>
                       <StatCard
-                        title="Best"
+                        title={t.dashboard.best}
                         value={githubStats.best}
                         icon={<Award className="w-5 h-5" />}
                       />
                     </StaggerItem>
                     <StaggerItem>
                       <StatCard
-                        title="Average"
+                        title={t.dashboard.average}
                         value={`${githubStats.average}`}
-                        subtitle="/ day"
+                        subtitle={t.dashboard.perDay}
                         icon={<Activity className="w-5 h-5" />}
                       />
                     </StaggerItem>
@@ -284,11 +286,11 @@ export default function DashboardPage() {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
                 <Clock className="w-5 h-5 text-gray-700" />
-                <h2 className="text-xl font-bold text-gray-900">WakaTime Stats</h2>
+                <h2 className="text-xl font-bold text-gray-900">{t.dashboard.wakatimeStats}</h2>
               </div>
-              <span className="text-sm text-gray-400">Last Update: 2 days ago</span>
+              <span className="text-sm text-gray-400">{t.dashboard.lastUpdate}: 2 days ago</span>
             </div>
-            <p className="text-gray-500 text-sm mb-6">Coding activity over the past 7 days.</p>
+            <p className="text-gray-500 text-sm mb-6">{t.dashboard.wakatimeSubtitle}</p>
 
             {/* WakaTime Info Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -296,28 +298,28 @@ export default function DashboardPage() {
                 whileHover={{ y: -2 }}
                 className="bg-white rounded-xl border border-gray-200 p-4"
               >
-                <p className="text-sm text-gray-500 mb-1">Start Date</p>
+                <p className="text-sm text-gray-500 mb-1">{t.dashboard.startDate}</p>
                 <p className="font-semibold text-gray-900">{mockWakaTimeData.startDate}</p>
               </motion.div>
               <motion.div
                 whileHover={{ y: -2 }}
                 className="bg-white rounded-xl border border-gray-200 p-4"
               >
-                <p className="text-sm text-gray-500 mb-1">End Date</p>
+                <p className="text-sm text-gray-500 mb-1">{t.dashboard.endDate}</p>
                 <p className="font-semibold text-gray-900">{mockWakaTimeData.endDate}</p>
               </motion.div>
               <motion.div
                 whileHover={{ y: -2 }}
                 className="bg-white rounded-xl border border-gray-200 p-4"
               >
-                <p className="text-sm text-gray-500 mb-1">Average Daily Coding Time</p>
+                <p className="text-sm text-gray-500 mb-1">{t.dashboard.avgDailyCoding}</p>
                 <p className="font-semibold text-gray-900">{mockWakaTimeData.averageDailyTime}</p>
               </motion.div>
               <motion.div
                 whileHover={{ y: -2 }}
                 className="bg-white rounded-xl border border-gray-200 p-4"
               >
-                <p className="text-sm text-gray-500 mb-1">Total This Week</p>
+                <p className="text-sm text-gray-500 mb-1">{t.dashboard.totalThisWeek}</p>
                 <p className="font-semibold text-gray-900">{mockWakaTimeData.totalTime}</p>
               </motion.div>
             </div>
@@ -333,7 +335,7 @@ export default function DashboardPage() {
               >
                 <div className="flex items-center gap-2 mb-4">
                   <Timer className="w-4 h-4 text-gray-500" />
-                  <h3 className="font-semibold text-gray-900">Daily Activity</h3>
+                  <h3 className="font-semibold text-gray-900">{t.dashboard.dailyActivity}</h3>
                 </div>
                 <WakaTimeBarChart data={mockWakaTimeData} />
               </motion.div>
@@ -347,7 +349,7 @@ export default function DashboardPage() {
               >
                 <div className="flex items-center gap-2 mb-4">
                   <Code2 className="w-4 h-4 text-gray-500" />
-                  <h3 className="font-semibold text-gray-900">Languages Used</h3>
+                  <h3 className="font-semibold text-gray-900">{t.dashboard.languagesUsed}</h3>
                 </div>
                 <LanguageBar languages={mockWakaTimeData.languages} />
               </motion.div>

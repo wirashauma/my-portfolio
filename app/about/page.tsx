@@ -13,6 +13,7 @@ import {
   Laptop,
 } from 'lucide-react';
 import { ScrollReveal } from '../components/ScrollReveal';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface Experience {
   id: number;
@@ -199,14 +200,16 @@ function TimelineItem({ exp, index }: { exp: Experience; index: number }) {
 }
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <ScrollReveal>
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">About</h1>
-            <p className="text-gray-600">A brief introduction to who I am.</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">{t.about.title}</h1>
+            <p className="text-gray-600">{t.about.subtitle}</p>
           </div>
         </ScrollReveal>
 
@@ -216,21 +219,36 @@ export default function AboutPage() {
         {/* Bio Section */}
         <ScrollReveal delay={0.1}>
           <div className="prose prose-gray max-w-none mb-12">
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              I&apos;m Wira Shauma, a Jambi-based Software Engineer dedicated to building impactful digital solutions. I specialize in developing web platforms and mobile applications using a modern tech stack, including Next.js, TypeScript, and native Android development with Kotlin.
+            <p className="text-gray-700 text-lg leading-relaxed mb-6 font-semibold">
+              {t.about.greeting}
             </p>
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              My primary focus is crafting software architecture that doesn&apos;t just work but is well structured, maintainable, and scalable to meet business needs. I believe that high-quality code must go hand-in-hand with system efficiency and logical clarity.
+              {t.about.intro}
             </p>
             <p className="text-gray-700 text-lg leading-relaxed mb-8">
-              I blend technical expertise with proactive communication, critical thinking, and effective time management. I thrive in collaborative environments and leverage leadership skills to ensure every project delivers optimal results and a real-world impact.
+              {t.about.expertise}
+            </p>
+
+            {/* What I Bring to the Table */}
+            <h3 className="text-xl font-bold text-gray-900 mb-4">{t.about.whatIBring}</h3>
+            
+            <p className="text-gray-700 text-lg leading-relaxed mb-4">
+              <span className="font-semibold text-emerald-600">{t.about.mobileDev}</span> {t.about.mobileDevDesc}
+            </p>
+            
+            <p className="text-gray-700 text-lg leading-relaxed mb-4">
+              <span className="font-semibold text-emerald-600">{t.about.webDev}</span> {t.about.webDevDesc}
+            </p>
+            
+            <p className="text-gray-700 text-lg leading-relaxed mb-8">
+              <span className="font-semibold text-emerald-600">{t.about.backendDev}</span> {t.about.backendDevDesc}
             </p>
 
             {/* Signature */}
             <div className="flex flex-col items-start">
-              <p className="text-gray-600 mb-2">Best regards,</p>
+              <p className="text-gray-600 mb-2">{t.about.bestRegards}</p>
               <span className="font-signature text-4xl text-emerald-600 italic font-bold">
-                wira
+                Wira Shauma Ardhana
               </span>
             </div>
           </div>
@@ -244,9 +262,9 @@ export default function AboutPage() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Briefcase className="w-5 h-5 text-gray-700" />
-              <h2 className="text-2xl font-bold text-gray-900">Career</h2>
+              <h2 className="text-2xl font-bold text-gray-900">{t.about.career}</h2>
             </div>
-            <p className="text-gray-600 mb-8">My professional journey.</p>
+            <p className="text-gray-600 mb-8">{t.about.careerSubtitle}</p>
 
             {/* Timeline */}
             <div className="relative">

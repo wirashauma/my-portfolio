@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../components/ScrollReveal';
+import { useLanguage } from '../contexts/LanguageContext';
 
 /**
  * Navigation Component
@@ -43,6 +44,8 @@ function Navigation() {
  * Experience Section
  */
 function ExperienceSection() {
+  const { t } = useLanguage();
+  
   const experiences = [
     {
       id: 1,
@@ -84,9 +87,9 @@ function ExperienceSection() {
     <section className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-white pt-32">
       <div className="max-w-4xl mx-auto">
         <ScrollReveal>
-          <h1 className="text-5xl font-bold text-gray-900 mb-6 text-center">Work Experience</h1>
+          <h1 className="text-5xl font-bold text-gray-900 mb-6 text-center">{t.experience.title}</h1>
           <p className="text-center text-gray-700 mb-16 max-w-2xl mx-auto text-lg">
-            Professional journey in mobile and web development
+            {t.experience.subtitle}
           </p>
         </ScrollReveal>
 
@@ -125,7 +128,7 @@ function ExperienceSection() {
                   {/* Achievements */}
                   <div className="mb-6">
                     <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                      <span className="text-emerald-600">★</span> Key Achievements
+                      <span className="text-emerald-600">★</span> {t.experience.keyAchievements}
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {exp.achievements.map((achievement) => (
@@ -143,7 +146,7 @@ function ExperienceSection() {
 
                   {/* Technologies */}
                   <div>
-                    <h4 className="font-bold text-gray-900 mb-3">Technologies Used:</h4>
+                    <h4 className="font-bold text-gray-900 mb-3">{t.experience.technologies}</h4>
                     <div className="flex flex-wrap gap-2">
                       {exp.technologies.map((tech) => (
                         <motion.span

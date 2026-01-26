@@ -11,16 +11,17 @@ export const translations = {
     },
     // Sidebar
     sidebar: {
+      name: 'Wira Shauma Ardhana',
       copyright: 'COPYRIGHT',
       allRightsReserved: 'All rights reserved.',
     },
     // Home Page
     home: {
-      greeting: "Hi, I'm Wira Shauma",
+      greeting: "Hi, I'm Wira Shauma Ardhana",
       location: 'Based in Padang, Indonesia',
       status: 'Onsite',
-      bio1: 'Software Engineer and coding content creator dedicated to building impactful digital solutions. I specialize in developing scalable web platforms and mobile applications using a modern tech stack, primarily Next.js, TypeScript, and Native Android (Kotlin).',
-      bio2: 'My focus is on crafting software architecture that is well-structured, maintainable, and aligned with business goals. I combine technical expertise with proactive communication and leadership to ensure every project delivers logical clarity and a meaningful real-world impact.',
+      bio1: 'I am a dedicated Full Stack Developer based in Padang, Indonesia, with a passion for building seamless, high-performance digital solutions across mobile and web platforms. Currently, I am honing my professional skills as a Full Stack Developer at Howarts Studio, where I contribute to delivering impactful real-world projects.',
+      bio2: 'My expertise lies in crafting robust software architectures that balance technical efficiency with exceptional user experience. I thrive in collaborative environments, leveraging proactive communication and critical thinking to solve complex business challenges through code.',
       viewWork: 'View My Work',
       getInTouch: 'Get In Touch',
       skills: 'Skills',
@@ -33,9 +34,16 @@ export const translations = {
     about: {
       title: 'About',
       subtitle: 'A brief introduction to who I am.',
-      bio1: "I'm Wira Shauma, a Padang-based Software Engineer dedicated to building impactful digital solutions. I specialize in developing web platforms and mobile applications using a modern tech stack, including Next.js, TypeScript, and native Android development with Kotlin.",
-      bio2: "My primary focus is crafting software architecture that doesn't just work but is well structured, maintainable, and scalable to meet business needs. I believe that high-quality code must go hand-in-hand with system efficiency and logical clarity.",
-      bio3: 'I blend technical expertise with proactive communication, critical thinking, and effective time management. I thrive in collaborative environments and leverage leadership skills to ensure every project delivers optimal results and a real-world impact.',
+      greeting: "Hi, I'm Wira Shauma Ardhana.",
+      intro: 'I am a dedicated Full Stack Developer based in Padang, Indonesia, with a passion for building seamless, high-performance digital solutions across mobile and web platforms. Currently, I am honing my professional skills as a Full Stack Developer at Howarts Studio, where I contribute to delivering impactful real-world projects.',
+      expertise: 'My expertise lies in crafting robust software architectures that balance technical efficiency with exceptional user experience. I thrive in collaborative environments, leveraging proactive communication and critical thinking to solve complex business challenges through code.',
+      whatIBring: 'What I Bring to the Table:',
+      mobileDev: 'Mobile Development:',
+      mobileDevDesc: 'I specialize in building cross-platform applications using Flutter (Dart) and React Native. To ensure scalability and reliability, I integrate these with modern backend services like Supabase, Firebase, and PostgreSQL.',
+      webDev: 'Web Development:',
+      webDevDesc: 'For web platforms, I utilize a modern stack including Next.js, React.js, TypeScript, and Tailwind CSS to build fast, SEO-friendly, and responsive interfaces.',
+      backendDev: 'Backend & Integration:',
+      backendDevDesc: 'I have extensive experience in developing and consuming REST APIs using Node.js, ensuring smooth data flow and secure communication between systems.',
       bestRegards: 'Best regards,',
       career: 'Career',
       careerSubtitle: 'My professional journey.',
@@ -64,6 +72,12 @@ export const translations = {
       view: 'View',
       noResults: 'No projects found',
       tryAdjusting: 'Try adjusting your search or filter criteria.',
+      filters: 'Filters:',
+      clearAll: 'Clear all',
+      clearAllFilters: 'Clear all filters',
+      showing: 'Showing',
+      of: 'of',
+      projectsLabel: 'projects',
     },
     // Achievements Page
     achievements: {
@@ -120,6 +134,13 @@ export const translations = {
       send: 'Send Message',
       goTo: 'Go to',
     },
+    // Experience Page
+    experience: {
+      title: 'Work Experience',
+      subtitle: 'Professional journey in mobile and web development',
+      keyAchievements: 'Key Achievements',
+      technologies: 'Technologies:',
+    },
     // Common
     common: {
       loading: 'Loading...',
@@ -139,16 +160,17 @@ export const translations = {
     },
     // Sidebar
     sidebar: {
+      name: 'Wira Shauma Ardhana',
       copyright: 'HAK CIPTA',
       allRightsReserved: 'Hak cipta dilindungi.',
     },
     // Home Page
     home: {
-      greeting: 'Halo, Saya Wira Shauma',
+      greeting: 'Halo, Saya Wira Shauma Ardhana',
       location: 'Berbasis di Padang, Indonesia',
       status: 'Onsite',
-      bio1: 'Software Engineer dan content creator coding yang berdedikasi untuk membangun solusi digital yang berdampak. Saya mengkhususkan diri dalam mengembangkan platform web dan aplikasi mobile yang skalabel menggunakan tech stack modern, terutama Next.js, TypeScript, dan Android Native (Kotlin).',
-      bio2: 'Fokus saya adalah merancang arsitektur perangkat lunak yang terstruktur dengan baik, mudah dipelihara, dan selaras dengan tujuan bisnis. Saya menggabungkan keahlian teknis dengan komunikasi proaktif dan kepemimpinan untuk memastikan setiap proyek memberikan kejelasan logis dan dampak nyata.',
+      bio1: 'Saya adalah Full Stack Developer yang berdedikasi berbasis di Padang, Indonesia, dengan passion untuk membangun solusi digital yang seamless dan berkinerja tinggi di platform mobile dan web. Saat ini, saya mengasah keterampilan profesional saya sebagai Full Stack Developer di Howarts Studio, di mana saya berkontribusi dalam memberikan proyek nyata yang berdampak.',
+      bio2: 'Keahlian saya terletak pada merancang arsitektur perangkat lunak yang kokoh dengan menyeimbangkan efisiensi teknis dan pengalaman pengguna yang luar biasa. Saya berkembang dalam lingkungan kolaboratif, memanfaatkan komunikasi proaktif dan pemikiran kritis untuk menyelesaikan tantangan bisnis yang kompleks melalui kode.',
       viewWork: 'Lihat Karya Saya',
       getInTouch: 'Hubungi Saya',
       skills: 'Keahlian',
@@ -161,9 +183,16 @@ export const translations = {
     about: {
       title: 'Tentang',
       subtitle: 'Perkenalan singkat tentang saya.',
-      bio1: 'Saya Wira Shauma, seorang Software Engineer berbasis di Padang yang berdedikasi membangun solusi digital berdampak. Saya mengkhususkan diri dalam pengembangan platform web dan aplikasi mobile menggunakan tech stack modern, termasuk Next.js, TypeScript, dan pengembangan Android native dengan Kotlin.',
-      bio2: 'Fokus utama saya adalah merancang arsitektur perangkat lunak yang tidak hanya berfungsi tetapi juga terstruktur dengan baik, mudah dipelihara, dan skalabel untuk memenuhi kebutuhan bisnis. Saya percaya bahwa kode berkualitas tinggi harus berjalan seiring dengan efisiensi sistem dan kejelasan logika.',
-      bio3: 'Saya memadukan keahlian teknis dengan komunikasi proaktif, pemikiran kritis, dan manajemen waktu yang efektif. Saya berkembang di lingkungan kolaboratif dan memanfaatkan keterampilan kepemimpinan untuk memastikan setiap proyek memberikan hasil optimal dan dampak nyata.',
+      greeting: 'Halo, Saya Wira Shauma Ardhana.',
+      intro: 'Saya adalah Full Stack Developer yang berdedikasi berbasis di Padang, Indonesia, dengan passion untuk membangun solusi digital yang seamless dan berkinerja tinggi di platform mobile dan web. Saat ini, saya mengasah keterampilan profesional saya sebagai Full Stack Developer di Howarts Studio, di mana saya berkontribusi dalam memberikan proyek nyata yang berdampak.',
+      expertise: 'Keahlian saya terletak pada merancang arsitektur perangkat lunak yang kokoh dengan menyeimbangkan efisiensi teknis dan pengalaman pengguna yang luar biasa. Saya berkembang dalam lingkungan kolaboratif, memanfaatkan komunikasi proaktif dan pemikiran kritis untuk menyelesaikan tantangan bisnis yang kompleks melalui kode.',
+      whatIBring: 'Yang Saya Tawarkan:',
+      mobileDev: 'Pengembangan Mobile:',
+      mobileDevDesc: 'Saya mengkhususkan diri dalam membangun aplikasi lintas platform menggunakan Flutter (Dart) dan React Native. Untuk memastikan skalabilitas dan keandalan, saya mengintegrasikannya dengan layanan backend modern seperti Supabase, Firebase, dan PostgreSQL.',
+      webDev: 'Pengembangan Web:',
+      webDevDesc: 'Untuk platform web, saya menggunakan stack modern termasuk Next.js, React.js, TypeScript, dan Tailwind CSS untuk membangun antarmuka yang cepat, SEO-friendly, dan responsif.',
+      backendDev: 'Backend & Integrasi:',
+      backendDevDesc: 'Saya memiliki pengalaman luas dalam mengembangkan dan mengonsumsi REST API menggunakan Node.js, memastikan aliran data yang lancar dan komunikasi yang aman antar sistem.',
       bestRegards: 'Salam hangat,',
       career: 'Karier',
       careerSubtitle: 'Perjalanan profesional saya.',
@@ -192,6 +221,12 @@ export const translations = {
       view: 'Lihat',
       noResults: 'Tidak ada proyek ditemukan',
       tryAdjusting: 'Coba sesuaikan pencarian atau filter Anda.',
+      filters: 'Filter:',
+      clearAll: 'Hapus semua',
+      clearAllFilters: 'Hapus semua filter',
+      showing: 'Menampilkan',
+      of: 'dari',
+      projectsLabel: 'proyek',
     },
     // Achievements Page
     achievements: {
@@ -247,6 +282,13 @@ export const translations = {
       message: 'Pesan',
       send: 'Kirim Pesan',
       goTo: 'Kunjungi',
+    },
+    // Experience Page
+    experience: {
+      title: 'Pengalaman Kerja',
+      subtitle: 'Perjalanan profesional dalam pengembangan mobile dan web',
+      keyAchievements: 'Pencapaian Utama',
+      technologies: 'Teknologi:',
     },
     // Common
     common: {

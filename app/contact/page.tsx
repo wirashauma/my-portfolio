@@ -12,6 +12,7 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../components/ScrollReveal';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // TikTok Icon Component (not available in lucide-react)
 function TikTokIcon({ className }: { className?: string }) {
@@ -26,65 +27,67 @@ function TikTokIcon({ className }: { className?: string }) {
   );
 }
 
-interface SocialCard {
+interface SocialCardData {
   id: string;
-  title: string;
-  subtitle: string;
+  titleKey: 'stayInTouch' | 'followJourney' | 'letsConnect' | 'joinFun' | 'exploreCode';
+  subtitleKey: 'stayInTouchSubtitle' | 'followJourneySubtitle' | 'letsConnectSubtitle' | 'joinFunSubtitle' | 'exploreCodeSubtitle';
   icon: React.ReactNode;
   href: string;
   gradient: string;
-  buttonText: string;
+  platform: string;
 }
 
-const socialCards: SocialCard[] = [
+const socialCardsData: SocialCardData[] = [
   {
     id: 'email',
-    title: 'Stay in Touch',
-    subtitle: 'Reach out via email for inquiries or collaborations.',
+    titleKey: 'stayInTouch',
+    subtitleKey: 'stayInTouchSubtitle',
     icon: <Mail className="w-12 h-12" />,
     href: 'mailto:wirashauma@gmail.com',
     gradient: 'from-red-500 via-red-400 to-orange-400',
-    buttonText: 'Go to Gmail',
+    platform: 'Gmail',
   },
   {
     id: 'instagram',
-    title: 'Follow My Journey',
-    subtitle: 'Follow my creative journey.',
+    titleKey: 'followJourney',
+    subtitleKey: 'followJourneySubtitle',
     icon: <Instagram className="w-12 h-12" />,
     href: 'https://instagram.com/wirashauma',
     gradient: 'from-pink-500 via-purple-500 to-orange-400',
-    buttonText: 'Go to Instagram',
+    platform: 'Instagram',
   },
   {
     id: 'linkedin',
-    title: "Let's Connect",
-    subtitle: 'Connect with me professionally.',
+    titleKey: 'letsConnect',
+    subtitleKey: 'letsConnectSubtitle',
     icon: <Linkedin className="w-12 h-12" />,
     href: 'https://linkedin.com/in/wirashauma',
     gradient: 'from-blue-700 via-blue-600 to-blue-500',
-    buttonText: 'Go to Linkedin',
+    platform: 'Linkedin',
   },
   {
     id: 'tiktok',
-    title: 'Join the Fun',
-    subtitle: 'Watch engaging and fun content.',
+    titleKey: 'joinFun',
+    subtitleKey: 'joinFunSubtitle',
     icon: <TikTokIcon className="w-12 h-12" />,
     href: 'https://tiktok.com/@wirashauma',
     gradient: 'from-gray-900 via-gray-800 to-gray-700',
-    buttonText: 'Go to Tiktok',
+    platform: 'Tiktok',
   },
   {
     id: 'github',
-    title: 'Explore the Code',
-    subtitle: 'Explore my open-source work.',
+    titleKey: 'exploreCode',
+    subtitleKey: 'exploreCodeSubtitle',
     icon: <Github className="w-12 h-12" />,
     href: 'https://github.com/wirashauma',
     gradient: 'from-gray-800 via-slate-700 to-cyan-800',
-    buttonText: 'Go to Github',
+    platform: 'Github',
   },
 ];
 
-function SocialCard({ card }: { card: SocialCard }) {
+function SocialCard({ card }: { card: SocialCardData }) {
+  const { t } = useLanguage();
+  
   return (
     <motion.a
       href={card.href}
@@ -96,13 +99,13 @@ function SocialCard({ card }: { card: SocialCard }) {
       <div className="p-6 text-white">
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <h3 className="text-xl font-bold mb-1">{card.title}</h3>
-            <p className="text-white/80 text-sm mb-4">{card.subtitle}</p>
+            <h3 className="text-xl font-bold mb-1">{t.contact[card.titleKey]}</h3>
+            <p className="text-white/80 text-sm mb-4">{t.contact[card.subtitleKey]}</p>
             <motion.span
               whileHover={{ x: 4 }}
               className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors"
             >
-              {card.buttonText}
+              {t.contact.goTo} {card.platform}
               <ExternalLink className="w-4 h-4" />
             </motion.span>
           </div>
@@ -114,6 +117,7 @@ function SocialCard({ card }: { card: SocialCard }) {
 }
 
 function ContactForm() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -144,7 +148,7 @@ function ContactForm() {
         {/* Name Input */}
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-            Name
+            {t.contact.name}
           </label>
           <input
             type="text"
@@ -153,14 +157,13 @@ function ContactForm() {
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
             className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-            placeholder="Your name"
           />
         </div>
 
         {/* Email Input */}
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-            Email
+            {t.contact.email}
           </label>
           <input
             type="email"
@@ -169,14 +172,13 @@ function ContactForm() {
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
             className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
-            placeholder="your.email@example.com"
           />
         </div>
 
         {/* Message Input */}
         <div>
           <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-            Message
+            {t.contact.message}
           </label>
           <textarea
             id="message"
@@ -185,7 +187,6 @@ function ContactForm() {
             required
             rows={5}
             className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all resize-none"
-            placeholder="Your message..."
           />
         </div>
 
@@ -202,7 +203,7 @@ function ContactForm() {
           ) : (
             <>
               <Send className="w-5 h-5" />
-              Send Message
+              {t.contact.send}
             </>
           )}
         </motion.button>
@@ -212,14 +213,16 @@ function ContactForm() {
 }
 
 export default function ContactPage() {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <ScrollReveal>
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Contact</h1>
-            <p className="text-gray-600">Let&apos;s get in touch</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">{t.contact.title}</h1>
+            <p className="text-gray-600">{t.contact.subtitle}</p>
           </div>
         </ScrollReveal>
 
@@ -228,20 +231,20 @@ export default function ContactPage() {
 
         {/* Social Media Section */}
         <ScrollReveal delay={0.1}>
-          <h2 className="text-lg font-semibold text-gray-900 mb-6">Find me on social media</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">{t.contact.findMe}</h2>
         </ScrollReveal>
 
         {/* Email Card (Full Width) */}
         <ScrollReveal delay={0.15}>
           <div className="mb-6">
-            <SocialCard card={socialCards[0]} />
+            <SocialCard card={socialCardsData[0]} />
           </div>
         </ScrollReveal>
 
         {/* Other Social Cards (Grid) */}
         <StaggerContainer staggerDelay={0.1}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
-            {socialCards.slice(1).map((card) => (
+            {socialCardsData.slice(1).map((card) => (
               <StaggerItem key={card.id}>
                 <SocialCard card={card} />
               </StaggerItem>
@@ -257,7 +260,7 @@ export default function ContactPage() {
           <div className="max-w-2xl mx-auto">
             <div className="flex items-center gap-2 mb-6">
               <MessageSquare className="w-5 h-5 text-gray-700" />
-              <h2 className="text-lg font-semibold text-gray-900">Or send me a message</h2>
+              <h2 className="text-lg font-semibold text-gray-900">{t.contact.sendMessage}</h2>
             </div>
             <ContactForm />
           </div>

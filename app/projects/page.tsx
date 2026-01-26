@@ -365,7 +365,7 @@ export default function ProjectsPage() {
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-2 text-(--text-muted)">
                 <Filter className="w-4 h-4" />
-                <span className="text-sm font-medium">Filters:</span>
+                <span className="text-sm font-medium">{t.projects.filters}</span>
               </div>
 
               {/* Platform Filter */}
@@ -408,14 +408,14 @@ export default function ProjectsPage() {
                   onClick={clearFilters}
                   className="px-3 py-2 text-sm text-emerald-600 hover:text-emerald-700 font-medium"
                 >
-                  Clear all
+                  {t.projects.clearAll}
                 </button>
               )}
             </div>
 
             {/* Results Count */}
             <p className="text-sm text-(--text-muted)">
-              Showing {filteredProjects.length} of {projects.length} projects
+              {t.projects.showing} {filteredProjects.length} {t.projects.of} {projects.length} {t.projects.projectsLabel}
             </p>
           </div>
         </ScrollReveal>
@@ -432,7 +432,7 @@ export default function ProjectsPage() {
               onClick={clearFilters}
               className="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
             >
-              Clear all filters
+              {t.projects.clearAllFilters}
             </button>
           </div>
         )}

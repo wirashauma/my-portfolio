@@ -65,7 +65,7 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/profile.jpg"
-                alt="Wira Shauma"
+                alt="Wira Shauma Ardhana"
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
@@ -84,7 +84,7 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
           transition={{ delay: 0.2, duration: 0.4 }}
           className="flex items-center justify-center gap-1.5"
         >
-          <h2 className="text-lg font-bold text-(--text-primary)">Wira Shauma</h2>
+          <h2 className="text-lg font-bold text-(--text-primary)">{t.sidebar.name}</h2>
           <CheckCircle2 className="w-5 h-5 text-blue-500 fill-blue-500" />
         </motion.div>
 
