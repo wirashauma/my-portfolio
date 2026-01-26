@@ -1,14 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ExternalLink, Menu, X, Image as ImageIcon } from 'lucide-react';
+import { Image as ImageIcon, Code2, Smartphone, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
-import { ScrollReveal, StaggerItem } from './components/ScrollReveal';
+import Link from 'next/link';
+import { ScrollReveal, StaggerContainer, StaggerItem } from './components/ScrollReveal';
 
 /**
  * Safe Image Component with Fallback
  */
-function SafeProjectImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
+function SafeImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -39,114 +40,98 @@ function SafeProjectImage({ src, alt, className }: { src: string; alt: string; c
   );
 }
 
-/**
- * Navigation Component
- */
-function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(sectionId);
-      setIsOpen(false);
-    }
-  };
-
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <div className="text-2xl font-bold">
-          <span className="text-gray-900">wira</span>
-          <span className="text-emerald-600">shauma</span>
-        </div>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
-          {['home', 'experience', 'projects', 'about', 'contact'].map((item) => (
-            <button
-              key={item}
-              onClick={() => scrollToSection(item)}
-              className={`capitalize font-medium transition ${
-                activeSection === item
-                  ? 'text-emerald-600 font-bold'
-                  : 'text-gray-700 hover:text-emerald-600'
-              }`}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
-          <div className="px-4 py-4 space-y-2">
-            {['home', 'experience', 'projects', 'about', 'contact'].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item)}
-                className="block w-full text-left px-4 py-2 capitalize font-medium text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-    </nav>
-  );
-}
+// Skills data with icons
+const skills = [
+  { name: 'HTML5', icon: '🌐', color: 'bg-orange-100' },
+  { name: 'CSS3', icon: '🎨', color: 'bg-blue-100' },
+  { name: 'Bootstrap', icon: '📦', color: 'bg-purple-100' },
+  { name: 'Tailwind', icon: '🌊', color: 'bg-cyan-100' },
+  { name: 'JavaScript', icon: '⚡', color: 'bg-yellow-100' },
+  { name: 'TypeScript', icon: '📘', color: 'bg-blue-100' },
+  { name: 'React', icon: '⚛️', color: 'bg-cyan-100' },
+  { name: 'Vue.js', icon: '💚', color: 'bg-emerald-100' },
+  { name: 'NuxtJS', icon: '🟢', color: 'bg-green-100' },
+  { name: 'Next.js', icon: '▲', color: 'bg-gray-100' },
+  { name: 'Framer', icon: '🎭', color: 'bg-pink-100' },
+  { name: 'Figma', icon: '🎨', color: 'bg-purple-100' },
+  { name: 'Redux', icon: '📊', color: 'bg-violet-100' },
+  { name: 'Prisma', icon: '🔺', color: 'bg-indigo-100' },
+  { name: 'Supabase', icon: '⚡', color: 'bg-emerald-100' },
+  { name: 'Firebase', icon: '🔥', color: 'bg-amber-100' },
+  { name: 'Vercel', icon: '▲', color: 'bg-gray-100' },
+  { name: 'Node.js', icon: '🟢', color: 'bg-green-100' },
+  { name: 'Express', icon: '🚀', color: 'bg-gray-100' },
+  { name: 'Go', icon: '🐹', color: 'bg-cyan-100' },
+  { name: 'PHP', icon: '🐘', color: 'bg-indigo-100' },
+  { name: 'Laravel', icon: '🔴', color: 'bg-red-100' },
+  { name: 'Kotlin', icon: '📱', color: 'bg-purple-100' },
+  { name: 'Flutter', icon: '💙', color: 'bg-blue-100' },
+  { name: 'React Native', icon: '⚛️', color: 'bg-cyan-100' },
+  { name: 'MySQL', icon: '🐬', color: 'bg-blue-100' },
+  { name: 'PostgreSQL', icon: '🐘', color: 'bg-blue-100' },
+  { name: 'MongoDB', icon: '🍃', color: 'bg-green-100' },
+  { name: 'Redis', icon: '🔴', color: 'bg-red-100' },
+  { name: 'Docker', icon: '🐳', color: 'bg-blue-100' },
+  { name: 'Git', icon: '📝', color: 'bg-orange-100' },
+  { name: 'GitHub', icon: '🐙', color: 'bg-gray-100' },
+];
 
 /**
- * Home Section
+ * Hero Section
  */
-function HomeSection() {
+function HeroSection() {
   return (
-    <section id="home" className="w-full min-h-screen pt-32 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-white via-emerald-50 to-white flex items-center">
-      <div className="max-w-6xl mx-auto w-full">
+    <section className="w-full min-h-screen px-4 sm:px-6 lg:px-8 bg-linear-to-br from-white via-emerald-50/30 to-white flex items-center py-20">
+      <div className="max-w-4xl mx-auto w-full">
         <ScrollReveal>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center"
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-4">
-              Wira Shauma Ardhana
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+              Hi, I&apos;m Wira Shauma
             </h1>
-            <p className="text-xl md:text-2xl text-emerald-600 font-semibold mb-6">
-              Full Stack Developer
+            
+            {/* Location & Status */}
+            <div className="flex flex-wrap items-center gap-4 text-gray-600 mb-6">
+              <span className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
+                Based in Padang, Indonesia 🇮🇩
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-gray-400 rounded-full" />
+                Onsite
+              </span>
+            </div>
+
+            {/* Bio */}
+            <p className="text-lg text-gray-700 mb-4 leading-relaxed max-w-3xl">
+              Software Engineer and coding content creator dedicated to building impactful digital solutions. I specialize in developing scalable web platforms and mobile applications using a modern tech stack, primarily Next.js, TypeScript, and Native Android (Kotlin).
             </p>
-            <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-              Web & Mobile Developer | Flutter • React Native • Next.js • React
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed max-w-3xl">
+              My focus is on crafting software architecture that is well-structured, maintainable, and aligned with business goals. I combine technical expertise with proactive communication and leadership to ensure every project delivers logical clarity and a meaningful real-world impact.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-8 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition"
-              >
-                View My Work
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-8 py-3 border-2 border-emerald-600 text-emerald-600 rounded-lg font-semibold hover:bg-emerald-50 transition"
-              >
-                Get In Touch
-              </motion.button>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <motion.div whileHover={{ scale: 1.02 }}>
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
+                >
+                  View My Work
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.02 }}>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-emerald-600 text-emerald-600 rounded-lg font-semibold hover:bg-emerald-50 transition-colors"
+                >
+                  Get In Touch
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         </ScrollReveal>
@@ -156,498 +141,200 @@ function HomeSection() {
 }
 
 /**
- * Experience Section
+ * Skills Section
  */
-function ExperienceSection() {
-  const education = {
-    school: 'Pendidikan Teknik Informatika',
-    period: '2023 - 2027',
-    description: 'Pursuing Computer Science Education at a leading university.',
-  };
-
-  const skills = [
-    { category: 'Frontend Web', items: ['React', 'Next.js', 'Tailwind CSS', 'TypeScript'] },
-    { category: 'Backend', items: ['Node.js', 'PostgreSQL', 'Supabase', 'Firebase'] },
-    { category: 'Mobile', items: ['Flutter', 'React Native', 'Dart'] },
-    { category: 'Tools', items: ['Git', 'VS Code', 'Figma', 'Firebase'] },
-  ];
-
+function SkillsSection() {
   return (
-    <section id="experience" className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
+    <section className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-white border-t border-gray-100">
+      <div className="max-w-4xl mx-auto">
         <ScrollReveal>
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-            Experience & Skills
-          </h2>
-        </ScrollReveal>
-
-        {/* Education */}
-        <ScrollReveal>
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Education</h3>
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="bg-white p-6 rounded-xl border border-gray-200 shadow-md"
-            >
-              <div className="flex items-start justify-between mb-2">
-                <h4 className="text-lg font-bold text-gray-900">{education.school}</h4>
-                <span className="text-sm font-semibold text-emerald-600 bg-emerald-100 px-3 py-1 rounded-full">
-                  {education.period}
-                </span>
-              </div>
-              <p className="text-gray-700">{education.description}</p>
-            </motion.div>
+          <div className="flex items-center gap-2 mb-3">
+            <Code2 className="w-5 h-5 text-emerald-600" />
+            <h2 className="text-2xl font-bold text-gray-900">Skills</h2>
           </div>
+          <p className="text-gray-600 mb-8">My professional skills.</p>
         </ScrollReveal>
 
-        {/* Skills */}
-        <ScrollReveal>
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Technical Skills</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {skills.map((skillGroup, idx) => (
-                <StaggerItem key={idx}>
-                  <motion.div
-                    whileHover={{ y: -4 }}
-                    className="bg-white p-6 rounded-xl border border-gray-200 shadow-md"
-                  >
-                    <h4 className="font-bold text-gray-900 mb-4 text-lg">{skillGroup.category}</h4>
-                    <ul className="space-y-2">
-                      {skillGroup.items.map((skill) => (
-                        <li key={skill} className="flex items-center gap-2">
-                          <span className="w-2 h-2 bg-emerald-600 rounded-full" />
-                          <span className="text-gray-700">{skill}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                </StaggerItem>
-              ))}
-            </div>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-  );
-}
-
-/**
- * Mobile Projects Section
- */
-function MobileProjectsSection() {
-  const mobileProjects = [
-    {
-      id: 1,
-      name: 'Sumatrans - Travel App',
-      description: 'A beautiful travel companion app for exploring Sumatran destinations.',
-      technologies: ['Flutter', 'Firebase', 'Google Maps API', 'Dart'],
-      image: '/projects/sumatrans-screenshot.png',
-      role: 'Frontend Developer',
-      highlights: [
-        'Real-time recommendations',
-        'Offline maps',
-        'Itinerary planning',
-      ],
-    },
-    {
-      id: 2,
-      name: 'Barasiah - Service Marketplace',
-      description: 'On-demand cleaning service marketplace with real-time tracking.',
-      technologies: ['React Native', 'Supabase', 'Node.js'],
-      image: '/projects/barasiah-screenshot.png',
-      role: 'Full Stack Developer',
-      highlights: [
-        'Real-time tracking',
-        'Secure payments',
-        'Rating system',
-      ],
-    },
-    {
-      id: 3,
-      name: 'BukuInduk - Education App',
-      description: 'Official student registry application for Bukittingi Education Department.',
-      technologies: ['React Native', 'Firebase', 'TypeScript'],
-      image: '/projects/bukuinduk-screenshot.png',
-      role: 'Mobile Frontend Developer',
-      highlights: [
-        'Student data management',
-        'Real-time sync',
-        'Offline support',
-      ],
-    },
-  ];
-
-  return (
-    <section id="mobile-projects" className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <ScrollReveal>
-          <h3 className="text-3xl font-bold text-gray-900 mb-8">Mobile Projects</h3>
-        </ScrollReveal>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mobileProjects.map((project) => (
-            <StaggerItem key={project.id}>
+        <ScrollReveal delay={0.1}>
+          <div className="flex flex-wrap gap-3">
+            {skills.map((skill, index) => (
               <motion.div
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all border border-gray-200"
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.02 }}
+                whileHover={{ scale: 1.1, y: -2 }}
+                className={`w-12 h-12 rounded-full ${skill.color} flex items-center justify-center text-xl cursor-pointer shadow-sm hover:shadow-md transition-all`}
+                title={skill.name}
               >
-                <div className="p-5">
-                  {/* Phone Mockup with Image */}
-                  <div className="flex justify-center mb-4">
-                    <motion.div whileHover={{ scale: 1.05 }} className="relative w-32">
-                      <div className="bg-black rounded-2xl p-1 shadow-lg">
-                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-5 bg-black rounded-b-2xl z-20" />
-                        <div className="bg-gray-100 rounded-xl overflow-hidden aspect-9/16">
-                          <SafeProjectImage 
-                            src={project.image} 
-                            alt={project.name}
-                            className="w-full h-full"
-                          />
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  <span className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold mb-2">
-                    Mobile
-                  </span>
-
-                  <h3 className="text-lg font-bold text-gray-900 mb-1">{project.name}</h3>
-                  <p className="text-xs text-emerald-600 font-semibold mb-2">{project.role}</p>
-
-                  <p className="text-gray-700 mb-3 text-sm leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  <div className="mb-3">
-                    <h4 className="text-sm font-bold text-gray-900 mb-2">Highlights:</h4>
-                    <ul className="space-y-1">
-                      {project.highlights.map((highlight) => (
-                        <li key={highlight} className="flex items-start gap-2">
-                          <span className="text-emerald-600 font-bold text-xs mt-0.5">✓</span>
-                          <span className="text-gray-700 text-xs">{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded hover:bg-emerald-100 hover:text-emerald-700 transition"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <motion.a
-                    href={project.id === 2 ? '/projects/barasiah' : '#'}
-                    whileHover={{ x: 2 }}
-                    className="inline-flex items-center gap-1 px-4 py-2 bg-emerald-600 text-white rounded-lg font-semibold text-sm hover:bg-emerald-700 transition"
-                  >
-                    Learn More <ExternalLink className="w-4 h-4" />
-                  </motion.a>
-                </div>
+                {skill.icon}
               </motion.div>
-            </StaggerItem>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
 }
 
 /**
- * Website Projects Section
+ * Featured Projects Preview
  */
-function WebProjectsSection() {
-  const webProjects = [
+function FeaturedProjectsSection() {
+  const featuredProjects = [
     {
       id: 1,
-      name: 'Education Management System',
-      description: 'Comprehensive platform for school administration with student management and reporting.',
-      technologies: ['Next.js', 'PostgreSQL', 'Tailwind CSS', 'Node.js'],
-      image: '/projects/education-system.png',
-      role: 'Full Stack Developer',
-      highlights: [
-        'Student management',
-        'Grade reporting',
-        'Attendance tracking',
-      ],
+      name: 'Personal Portfolio',
+      description: 'Personal website & portfolio, built from scratch using Next.js, TypeScript, Tailwind...',
+      technologies: ['TypeScript', 'Tailwind', 'React', 'Next.js', 'Supabase'],
+      image: '/projects/portfolio.png',
+      featured: true,
+      type: 'web',
     },
     {
       id: 2,
-      name: 'E-Commerce Platform',
-      description: 'Full-featured online store with product management and secure checkout.',
-      technologies: ['React', 'Stripe', 'Firebase', 'TypeScript'],
-      image: '/projects/ecommerce-platform.png',
-      role: 'Full Stack Developer',
-      highlights: [
-        'Product catalog',
-        'Secure payments',
-        'Order tracking',
-      ],
+      name: 'Barasiah',
+      description: 'On-demand cleaning service marketplace with real-time tracking and secure payments.',
+      technologies: ['Kotlin', 'Android'],
+      image: '/projects/barasiah.png',
+      featured: true,
+      type: 'mobile',
     },
   ];
 
   return (
-    <section id="web-projects" className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
+    <section className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 border-t border-gray-100">
+      <div className="max-w-4xl mx-auto">
         <ScrollReveal>
-          <h3 className="text-3xl font-bold text-gray-900 mb-8">Web Projects</h3>
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Smartphone className="w-5 h-5 text-emerald-600" />
+                <h2 className="text-2xl font-bold text-gray-900">Featured Projects</h2>
+              </div>
+              <p className="text-gray-600">A showcase of my recent work.</p>
+            </div>
+            <Link
+              href="/projects"
+              className="text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-1 transition-colors"
+            >
+              View all
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {webProjects.map((project) => (
-            <StaggerItem key={project.id}>
-              <motion.div
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all border border-gray-200"
-              >
-                <div className="p-5">
-                  {/* Website Screenshot with Image */}
-                  <div className="relative rounded-lg overflow-hidden bg-gray-200 h-40 mb-4">
-                    <SafeProjectImage 
-                      src={project.image} 
+        <StaggerContainer staggerDelay={0.15}>
+          <div className="grid md:grid-cols-2 gap-6">
+            {featuredProjects.map((project) => (
+              <StaggerItem key={project.id}>
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-200"
+                >
+                  {/* Image */}
+                  <div className="relative h-48 bg-linear-to-br from-emerald-100 to-cyan-100">
+                    <SafeImage
+                      src={project.image}
                       alt={project.name}
                       className="w-full h-full"
                     />
-                  </div>
-
-                  <span className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold mb-2">
-                    Web App
-                  </span>
-
-                  <h3 className="text-lg font-bold text-gray-900 mb-1">{project.name}</h3>
-                  <p className="text-xs text-emerald-600 font-semibold mb-2">{project.role}</p>
-
-                  <p className="text-gray-700 mb-3 text-sm leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  <div className="mb-3">
-                    <h4 className="text-sm font-bold text-gray-900 mb-2">Highlights:</h4>
-                    <ul className="space-y-1">
-                      {project.highlights.map((highlight) => (
-                        <li key={highlight} className="flex items-start gap-2">
-                          <span className="text-emerald-600 font-bold text-xs mt-0.5">✓</span>
-                          <span className="text-gray-700 text-xs">{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded hover:bg-emerald-100 hover:text-emerald-700 transition"
-                      >
-                        {tech}
+                    {project.featured && (
+                      <span className="absolute top-3 right-3 px-2 py-1 bg-red-500 text-white text-xs font-semibold rounded-md flex items-center gap-1">
+                        📌 Featured
                       </span>
-                    ))}
+                    )}
+                    {/* Hover Overlay */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      className="absolute inset-0 bg-black/50 flex items-center justify-center"
+                    >
+                      <Link
+                        href="/projects"
+                        className="flex items-center gap-2 text-white font-medium hover:underline"
+                      >
+                        View Project <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    </motion.div>
                   </div>
 
-                  <motion.a
-                    href="#"
-                    whileHover={{ x: 2 }}
-                    className="inline-flex items-center gap-1 px-4 py-2 bg-emerald-600 text-white rounded-lg font-semibold text-sm hover:bg-emerald-700 transition"
-                  >
-                    Learn More <ExternalLink className="w-4 h-4" />
-                  </motion.a>
-                </div>
-              </motion.div>
-            </StaggerItem>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/**
- * Projects Section (Container)
- */
-function ProjectsSection() {
-  return (
-    <section id="projects" className="w-full bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <ScrollReveal>
-          <h2 className="text-4xl font-bold text-gray-900 mb-3 text-center">
-            Projects
-          </h2>
-        </ScrollReveal>
-      </div>
-      <MobileProjectsSection />
-      <WebProjectsSection />
-    </section>
-  );
-}
-
-/**
- * About Section
- */
-function AboutSection() {
-  return (
-    <section id="about" className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-emerald-50 to-white">
-      <div className="max-w-6xl mx-auto">
-        <ScrollReveal>
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-            About Me
-          </h2>
-        </ScrollReveal>
-
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <ScrollReveal>
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                Hi! I&apos;m Wira Shauma Ardhana, a passionate full-stack developer pursuing Computer Science Education at university. I specialize in building beautiful and functional web and mobile applications.
-              </p>
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                With expertise in both frontend and backend technologies, I&apos;ve worked on diverse projects ranging from travel applications to service marketplaces. I&apos;m particularly interested in creating seamless user experiences and scalable architectures.
-              </p>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                When I&apos;m not coding, I enjoy learning new technologies, contributing to open-source projects, and exploring innovative solutions to real-world problems.
-              </p>
-            </motion.div>
-          </ScrollReveal>
-
-          <ScrollReveal>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="bg-white p-8 rounded-xl border border-gray-200 shadow-lg"
-            >
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Quick Facts</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <span className="text-emerald-600 font-bold text-lg">▸</span>
-                  <div>
-                    <p className="font-bold text-gray-900">Name</p>
-                    <p className="text-gray-700">Wira Shauma Ardhana</p>
+                  {/* Content */}
+                  <div className="p-5">
+                    <h3 className="text-lg font-bold text-emerald-600 mb-2">{project.name}</h3>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{project.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.slice(0, 4).map((tech) => (
+                        <span
+                          key={tech}
+                          className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs"
+                          title={tech}
+                        >
+                          {tech === 'TypeScript' && '📘'}
+                          {tech === 'Tailwind' && '🌊'}
+                          {tech === 'React' && '⚛️'}
+                          {tech === 'Next.js' && '▲'}
+                          {tech === 'Supabase' && '⚡'}
+                          {tech === 'Kotlin' && '📱'}
+                          {tech === 'Android' && '🤖'}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-emerald-600 font-bold text-lg">▸</span>
-                  <div>
-                    <p className="font-bold text-gray-900">Education</p>
-                    <p className="text-gray-700">Pendidikan Teknik Informatika (2023-2027)</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-emerald-600 font-bold text-lg">▸</span>
-                  <div>
-                    <p className="font-bold text-gray-900">Specialization</p>
-                    <p className="text-gray-700">Full Stack Web & Mobile Development</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-emerald-600 font-bold text-lg">▸</span>
-                  <div>
-                    <p className="font-bold text-gray-900">Expertise</p>
-                    <p className="text-gray-700">React, Next.js, Flutter, React Native, Node.js</p>
-                  </div>
-                </li>
-              </ul>
-            </motion.div>
-          </ScrollReveal>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/**
- * Contact Section
- */
-function ContactSection() {
-  return (
-    <section id="contact" className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="max-w-2xl mx-auto">
-        <ScrollReveal>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">
-            Get In Touch
-          </h2>
-          <p className="text-center text-gray-700 mb-12">
-            Have a project in mind? Let&apos;s collaborate and create something amazing together!
-          </p>
-        </ScrollReveal>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="bg-white p-8 rounded-xl border border-gray-200 shadow-lg"
-        >
-          <div className="space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-                <span className="text-2xl">📧</span>
-              </div>
-              <div>
-                <p className="font-bold text-gray-900">Email</p>
-                <a href="mailto:your.email@example.com" className="text-emerald-600 hover:text-emerald-700 font-medium">
-                  your.email@example.com
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-                <span className="text-2xl">💼</span>
-              </div>
-              <div>
-                <p className="font-bold text-gray-900">LinkedIn</p>
-                <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-medium">
-                  linkedin.com/in/yourprofile
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-                <span className="text-2xl">🐙</span>
-              </div>
-              <div>
-                <p className="font-bold text-gray-900">GitHub</p>
-                <a href="https://github.com/yourprofile" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-medium">
-                  github.com/yourprofile
-                </a>
-              </div>
-            </div>
+                </motion.div>
+              </StaggerItem>
+            ))}
           </div>
-
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            className="w-full mt-8 px-8 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition"
-          >
-            Send Me an Email
-          </motion.button>
-        </motion.div>
+        </StaggerContainer>
       </div>
     </section>
   );
 }
 
 /**
- * Main Page Component
+ * Quick Stats Section
+ */
+function QuickStatsSection() {
+  const stats = [
+    { label: 'Years Experience', value: '3+' },
+    { label: 'Projects Completed', value: '20+' },
+    { label: 'Certificates Earned', value: '56+' },
+    { label: 'GitHub Contributions', value: '599+' },
+  ];
+
+  return (
+    <section className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-white border-t border-gray-100">
+      <div className="max-w-4xl mx-auto">
+        <StaggerContainer staggerDelay={0.1}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((stat) => (
+              <StaggerItem key={stat.label}>
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="text-center p-6 bg-linear-to-br from-emerald-50 to-white rounded-xl border border-emerald-100"
+                >
+                  <p className="text-3xl font-bold text-emerald-600 mb-1">{stat.value}</p>
+                  <p className="text-sm text-gray-600">{stat.label}</p>
+                </motion.div>
+              </StaggerItem>
+            ))}
+          </div>
+        </StaggerContainer>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Main Home Page Component
  */
 export default function Home() {
   return (
     <main className="w-full overflow-x-hidden scroll-smooth bg-white">
-      <Navigation />
-      <HomeSection />
-      <ExperienceSection />
-      <ProjectsSection />
-      <AboutSection />
-      <ContactSection />
+      <HeroSection />
+      <SkillsSection />
+      <FeaturedProjectsSection />
+      <QuickStatsSection />
     </main>
   );
 }

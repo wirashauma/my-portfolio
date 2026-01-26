@@ -1,0 +1,262 @@
+'use client';
+
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import {
+  Briefcase,
+  MapPin,
+  Calendar,
+  ChevronDown,
+  ChevronUp,
+  Building2,
+  Globe,
+  Laptop,
+} from 'lucide-react';
+import { ScrollReveal } from '../components/ScrollReveal';
+
+interface Experience {
+  id: number;
+  title: string;
+  company: string;
+  companyLogo?: string;
+  location: string;
+  period: string;
+  duration: string;
+  type: 'Full-time' | 'Part-time' | 'Internship' | 'Freelance';
+  mode: 'Remote' | 'Onsite' | 'Hybrid';
+  description?: string;
+  achievements?: string[];
+  technologies?: string[];
+}
+
+const experiences: Experience[] = [
+  {
+    id: 1,
+    title: 'Full Stack Developer',
+    company: 'Howarts Studio',
+    location: 'Padang, Indonesia',
+    period: 'Dec 2025 - Present',
+    duration: 'Ongoing',
+    type: 'Full-time',
+    mode: 'Onsite',
+    description: 'Collaborating in a studio environment to deliver real-world digital solutions. Involved in the development of Barasiah App, Sumatrans App, and Bukuinduk App.',
+    achievements: [
+      'Developed Barasiah App - A cleaning service marketplace platform with real-time booking and tracking',
+      'Built Sumatrans App - An integrated transportation management system for bus operators',
+      'Created Bukuinduk App - A comprehensive school record management system for Dinas Pendidikan',
+      'Implemented scalable architectures handling 10,000+ daily active users',
+      'Led cross-functional collaboration between design, development, and business teams',
+    ],
+    technologies: ['Next.js', 'TypeScript', 'Flutter', 'Kotlin', 'Node.js', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
+  },
+];
+
+const modeIcons: Record<string, React.ReactNode> = {
+  Remote: <Globe className="w-4 h-4" />,
+  Onsite: <Building2 className="w-4 h-4" />,
+  Hybrid: <Laptop className="w-4 h-4" />,
+};
+
+const modeColors: Record<string, string> = {
+  Remote: 'bg-blue-100 text-blue-700',
+  Onsite: 'bg-emerald-100 text-emerald-700',
+  Hybrid: 'bg-purple-100 text-purple-700',
+};
+
+const typeColors: Record<string, string> = {
+  'Full-time': 'bg-emerald-100 text-emerald-700',
+  'Part-time': 'bg-amber-100 text-amber-700',
+  Internship: 'bg-blue-100 text-blue-700',
+  Freelance: 'bg-purple-100 text-purple-700',
+};
+
+function TimelineItem({ exp, index }: { exp: Experience; index: number }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.1 }}
+      className="relative pl-8 pb-8 last:pb-0"
+    >
+      {/* Timeline Line */}
+      <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-200" />
+      
+      {/* Timeline Dot */}
+      <motion.div
+        whileHover={{ scale: 1.2 }}
+        className="absolute -left-2 top-2 w-4 h-4 rounded-full bg-emerald-500 border-4 border-white shadow-md"
+      />
+
+      {/* Card */}
+      <motion.div
+        whileHover={{ x: 4 }}
+        className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all"
+      >
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+          <div>
+            <h3 className="text-lg font-bold text-gray-900">{exp.title}</h3>
+            <p className="text-emerald-600 font-semibold">{exp.company}</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-full ${typeColors[exp.type]}`}>
+              {exp.type}
+            </span>
+            <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-full ${modeColors[exp.mode]}`}>
+              {modeIcons[exp.mode]}
+              {exp.mode}
+            </span>
+          </div>
+        </div>
+
+        {/* Meta Info */}
+        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
+          <span className="inline-flex items-center gap-1">
+            <MapPin className="w-4 h-4" />
+            {exp.location}
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <Calendar className="w-4 h-4" />
+            {exp.period}
+          </span>
+          <span className="text-gray-400">• {exp.duration}</span>
+        </div>
+
+        {/* Expand/Collapse Button */}
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-emerald-600 transition-colors"
+        >
+          {isExpanded ? (
+            <>
+              Hide details <ChevronUp className="w-4 h-4" />
+            </>
+          ) : (
+            <>
+              Show details <ChevronDown className="w-4 h-4" />
+            </>
+          )}
+        </button>
+
+        {/* Expandable Content */}
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <div className="pt-4 border-t border-gray-100 mt-4">
+                {/* Description */}
+                {exp.description && (
+                  <p className="text-gray-600 mb-4">{exp.description}</p>
+                )}
+
+                {/* Achievements */}
+                {exp.achievements && exp.achievements.length > 0 && (
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                      <span className="text-emerald-600">★</span> Key Achievements
+                    </h4>
+                    <ul className="space-y-1">
+                      {exp.achievements.map((achievement, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                          <span className="text-emerald-600 font-bold mt-0.5">✓</span>
+                          {achievement}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Technologies */}
+                {exp.technologies && exp.technologies.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Technologies:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {exp.technologies.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1 text-xs font-medium bg-emerald-50 text-emerald-700 rounded-full"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export default function AboutPage() {
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Header */}
+        <ScrollReveal>
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">About</h1>
+            <p className="text-gray-600">A brief introduction to who I am.</p>
+          </div>
+        </ScrollReveal>
+
+        {/* Divider */}
+        <div className="border-t border-dashed border-gray-200 my-8" />
+
+        {/* Bio Section */}
+        <ScrollReveal delay={0.1}>
+          <div className="prose prose-gray max-w-none mb-12">
+            <p className="text-gray-700 text-lg leading-relaxed mb-6">
+              I&apos;m Wira Shauma, a Jambi-based Software Engineer dedicated to building impactful digital solutions. I specialize in developing web platforms and mobile applications using a modern tech stack, including Next.js, TypeScript, and native Android development with Kotlin.
+            </p>
+            <p className="text-gray-700 text-lg leading-relaxed mb-6">
+              My primary focus is crafting software architecture that doesn&apos;t just work but is well structured, maintainable, and scalable to meet business needs. I believe that high-quality code must go hand-in-hand with system efficiency and logical clarity.
+            </p>
+            <p className="text-gray-700 text-lg leading-relaxed mb-8">
+              I blend technical expertise with proactive communication, critical thinking, and effective time management. I thrive in collaborative environments and leverage leadership skills to ensure every project delivers optimal results and a real-world impact.
+            </p>
+
+            {/* Signature */}
+            <div className="flex flex-col items-start">
+              <p className="text-gray-600 mb-2">Best regards,</p>
+              <span className="font-signature text-4xl text-emerald-600 italic font-bold">
+                wira
+              </span>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Divider */}
+        <div className="border-t border-dashed border-gray-200 my-8" />
+
+        {/* Career Section */}
+        <ScrollReveal delay={0.2}>
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <Briefcase className="w-5 h-5 text-gray-700" />
+              <h2 className="text-2xl font-bold text-gray-900">Career</h2>
+            </div>
+            <p className="text-gray-600 mb-8">My professional journey.</p>
+
+            {/* Timeline */}
+            <div className="relative">
+              {experiences.map((exp, index) => (
+                <TimelineItem key={exp.id} exp={exp} index={index} />
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </div>
+  );
+}
