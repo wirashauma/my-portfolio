@@ -6,6 +6,36 @@
   --primary-green: #10b981;
   --dark-green: #059669;
   --light-green: #d1fae5;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e5e7eb;
+  --hover-bg: #f3f4f6;
+  --input-bg: #f9fafb;
+  --input-border: #d1d5db;
+}
+
+/* Dark mode styles */
+.dark {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --card-bg: #1e293b;
+  --card-border: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --sidebar-bg: #1e293b;
+  --sidebar-border: #334155;
+  --hover-bg: #334155;
+  --input-bg: #1e293b;
+  --input-border: #475569;
+  /* Emerald accent preserved */
+  --primary-green: #10b981;
+  --dark-green: #059669;
+  --light-green: rgba(16, 185, 129, 0.15);
 }
 
 @theme inline {
@@ -15,19 +45,111 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #f8faf9;
-    --foreground: #1a1a1a;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Dark mode utility classes */
+.dark .bg-white {
+  background-color: var(--card-bg) !important;
+}
+
+.dark .bg-gray-50 {
+  background-color: var(--hover-bg) !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: #2d3748 !important;
+}
+
+.dark .border-gray-200 {
+  border-color: var(--card-border) !important;
+}
+
+.dark .border-gray-100 {
+  border-color: var(--card-border) !important;
+}
+
+.dark .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.dark .text-gray-800 {
+  color: var(--text-primary) !important;
+}
+
+.dark .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+.dark .text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+
+.dark .text-gray-500 {
+  color: var(--text-muted) !important;
+}
+
+.dark .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.dark .hover\:bg-gray-50:hover {
+  background-color: var(--hover-bg) !important;
+}
+
+.dark .hover\:bg-gray-100:hover {
+  background-color: #2d3748 !important;
+}
+
+.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+.dark .shadow-sm {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Input fields in dark mode */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-primary);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--card-bg);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--card-border);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
