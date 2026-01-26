@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, Calendar, Building2 } from 'lucide-react';
+import { Award, Calendar, Building2, Search, Filter } from 'lucide-react';
+import { useState, useMemo } from 'react';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../components/ScrollReveal';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -113,6 +114,28 @@ function CertificateCard({ cert }: { cert: Certificate }) {
 
 export default function AchievementsPage() {
   const { t } = useLanguage();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [typeFilter, setTypeFilter] = useState<string>('all');
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
+
+  const filteredAchievements = useMemo(() => {
+    return achievements.filter((cert) => {
+      const matchesSearch = searchQuery === '' ||
+        cert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        cert.issuer.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesType = typeFilter === 'all' || cert.type === typeFilter;
+      const matchesCategory = categoryFilter === 'all' || cert.category === categoryFilter;
+      return matchesSearch && matchesType && matchesCategory;
+    });
+  }, [searchQuery, typeFilter, categoryFilter]);
+
+  const clearFilters = () => {
+    setSearchQuery('');
+    setTypeFilter('all');
+    setCategoryFilter('all');
+  };
+
+  const hasActiveFilters = searchQuery || typeFilter !== 'all' || categoryFilter !== 'all';
 
   return (
     <div className="min-h-screen bg-white">
@@ -130,23 +153,107 @@ export default function AchievementsPage() {
         {/* Divider */}
         <div className="border-t border-dashed border-gray-200 my-8" />
 
+        {/* Search & Filters */}
+        <ScrollReveal delay={0.05}>
+          <div className="mb-8 space-y-4">
+            {/* Search Bar */}
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t.achievements.search}
+                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+              />
+            </div>
+
+            {/* Filter Buttons */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2 text-gray-500">
+                <Filter className="w-4 h-4" />
+                <span className="text-sm font-medium">Filters:</span>
+              </div>
+
+              {/* Type Filter */}
+              <select
+                value={typeFilter}
+                onChange={(e) => setTypeFilter(e.target.value)}
+                className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              >
+                <option value="all">{t.achievements.filterByType}</option>
+                <option value="Course">Course</option>
+                <option value="Professional">Professional</option>
+                <option value="Internship">Internship</option>
+                <option value="Competition">Competition</option>
+                <option value="Workshop">Workshop</option>
+              </select>
+
+              {/* Category Filter */}
+              <select
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              >
+                <option value="all">{t.achievements.filterByCategory}</option>
+                <option value="Mobile">Mobile</option>
+                <option value="Web">Web</option>
+                <option value="Backend">Backend</option>
+                <option value="Cloud">Cloud</option>
+                <option value="AI/ML">AI/ML</option>
+                <option value="General">General</option>
+                <option value="Freelance">Freelance</option>
+              </select>
+
+              {/* Clear Filters */}
+              {hasActiveFilters && (
+                <button
+                  onClick={clearFilters}
+                  className="px-3 py-2 text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
+          </div>
+        </ScrollReveal>
+
         {/* Total Count */}
         <ScrollReveal delay={0.1}>
           <p className="text-gray-500 mb-6">
-            {t.achievements.total}: <span className="font-semibold text-gray-900">{achievements.length}</span>
+            {t.achievements.total}: <span className="font-semibold text-gray-900">{filteredAchievements.length}</span>
           </p>
         </ScrollReveal>
 
-        {/* Certificates Grid */}
-        <StaggerContainer staggerDelay={0.05}>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {achievements.map((cert) => (
-              <StaggerItem key={cert.id}>
-                <CertificateCard cert={cert} />
-              </StaggerItem>
-            ))}
+        {/* No Results */}
+        {filteredAchievements.length === 0 && (
+          <div className="text-center py-16">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+              <Search className="w-8 h-8 text-gray-400" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">{t.achievements.noResults}</h3>
+            <p className="text-gray-600 mb-4">{t.achievements.tryAdjusting}</p>
+            <button
+              onClick={clearFilters}
+              className="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
+            >
+              Clear all filters
+            </button>
           </div>
-        </StaggerContainer>
+        )}
+
+        {/* Certificates Grid */}
+        {filteredAchievements.length > 0 && (
+          <StaggerContainer staggerDelay={0.05}>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredAchievements.map((cert) => (
+                <StaggerItem key={cert.id}>
+                  <CertificateCard cert={cert} />
+                </StaggerItem>
+              ))}
+            </div>
+          </StaggerContainer>
+        )}
       </div>
     </div>
   );

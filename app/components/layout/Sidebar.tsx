@@ -64,7 +64,7 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
             <div className="w-full h-full rounded-full bg-(--card-bg) overflow-hidden flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/profile.jpg"
+                src="/profile.jpeg"
                 alt="Wira Shauma Ardhana"
                 className="w-full h-full object-cover"
                 onError={(e) => {

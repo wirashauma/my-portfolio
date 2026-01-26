@@ -6,55 +6,11 @@ import Link from 'next/link';
 import { ScrollReveal, StaggerItem } from '../../components/ScrollReveal';
 
 /**
- * Navigation Component - Static Header
- */
-function Navigation() {
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold">
-          <span className="text-gray-900">wira</span>
-          <span className="text-emerald-600">shauma</span>
-        </Link>
-
-        <div className="hidden md:flex items-center gap-8">
-          <Link href="/" className="text-gray-700 hover:text-emerald-600 font-medium transition">
-            home
-          </Link>
-          <Link href="/#experience" className="text-gray-700 hover:text-emerald-600 font-medium transition">
-            experience
-          </Link>
-          <Link
-            href="/#projects"
-            className="text-emerald-600 font-medium transition"
-          >
-            projects
-          </Link>
-          <Link href="/#about" className="text-gray-700 hover:text-emerald-600 font-medium transition">
-            about
-          </Link>
-          <Link href="/#contact" className="text-gray-700 hover:text-emerald-600 font-medium transition">
-            contact
-          </Link>
-        </div>
-
-        <Link
-          href="/"
-          className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition font-medium"
-        >
-          Back to Portfolio
-        </Link>
-      </div>
-    </nav>
-  );
-}
-
-/**
  * Hero Section
  */
 function HeroSection() {
   return (
-    <section className="w-full pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-white via-emerald-50 to-white">
+    <section className="w-full pt-12 pb-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-white via-emerald-50 to-white">
       <div className="max-w-6xl mx-auto">
         <ScrollReveal>
           <div className="text-center mb-12">
@@ -561,7 +517,6 @@ function CTASection() {
 export default function BarasiaProjectPage() {
   return (
     <main className="w-full overflow-x-hidden scroll-smooth bg-white">
-      <Navigation />
       <HeroSection />
       <TechStackSection />
       <FeaturesSection />

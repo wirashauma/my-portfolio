@@ -153,29 +153,6 @@ const projects: Project[] = [
   },
 ];
 
-// Tech icons mapping
-const techIcons: Record<string, string> = {
-  TypeScript: '📘',
-  'Tailwind CSS': '🌊',
-  React: '⚛️',
-  'Next.js': '▲',
-  Supabase: '⚡',
-  Kotlin: '📱',
-  Android: '🤖',
-  Flutter: '💙',
-  Dart: '🎯',
-  Firebase: '🔥',
-  'Google Maps API': '🗺️',
-  'React Native': '⚛️',
-  'Node.js': '🟢',
-  PostgreSQL: '🐘',
-  Stripe: '💳',
-  'Framer Motion': '🎬',
-  Express: '🚀',
-  Redis: '🔴',
-  'Chart.js': '📊',
-};
-
 // Filter badge colors
 const platformColors: Record<Platform, string> = {
   Mobile: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
@@ -251,14 +228,13 @@ function ProjectCard({ project }: { project: Project }) {
         <p className="text-(--text-secondary) text-sm mb-4 flex-1 line-clamp-3">{project.description}</p>
         
         {/* Technologies */}
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-1.5 mb-4">
           {project.technologies.slice(0, 5).map((tech) => (
             <span
               key={tech}
-              className="w-8 h-8 rounded-full bg-(--hover-bg) flex items-center justify-center text-sm"
-              title={tech}
+              className="px-2 py-1 rounded-md bg-(--hover-bg) text-xs font-medium text-(--text-secondary)"
             >
-              {techIcons[tech] || '🔧'}
+              {tech}
             </span>
           ))}
         </div>

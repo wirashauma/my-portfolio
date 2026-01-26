@@ -28,14 +28,14 @@ interface StatCardProps {
 function StatCard({ title, value, icon, subtitle, color = 'emerald' }: StatCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -4, scale: 1.02 }}
-      className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all"
+      whileHover={{ y: -2 }}
+      className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
     >
-      <div className="flex items-start justify-between mb-2">
+      <div className="flex items-center justify-between mb-3">
         <span className="text-sm font-medium text-gray-500">{title}</span>
-        <span className={`text-${color}-500`}>{icon}</span>
+        <span className={`p-2 rounded-lg bg-${color}-50 text-${color}-600`}>{icon}</span>
       </div>
-      <p className={`text-3xl font-bold text-${color}-600`}>{value}</p>
+      <p className={`text-2xl font-bold text-gray-900`}>{value}</p>
       {subtitle && <p className="text-xs text-gray-400 mt-1">{subtitle}</p>}
     </motion.div>
   );
@@ -43,12 +43,12 @@ function StatCard({ title, value, icon, subtitle, color = 'emerald' }: StatCardP
 
 function StatCardSkeleton() {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6">
-      <div className="flex items-start justify-between mb-2">
+    <div className="bg-white rounded-xl border border-gray-200 p-5">
+      <div className="flex items-center justify-between mb-3">
         <Skeleton width="w-20" height="h-4" />
-        <Skeleton width="w-6" height="h-6" />
+        <Skeleton width="w-8" height="h-8" className="rounded-lg" />
       </div>
-      <Skeleton width="w-16" height="h-8" className="mt-2" />
+      <Skeleton width="w-16" height="h-7" />
     </div>
   );
 }
@@ -296,30 +296,42 @@ export default function DashboardPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               <motion.div
                 whileHover={{ y: -2 }}
-                className="bg-white rounded-xl border border-gray-200 p-4"
+                className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
               >
-                <p className="text-sm text-gray-500 mb-1">{t.dashboard.startDate}</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <Calendar className="w-4 h-4 text-gray-400" />
+                  <p className="text-sm text-gray-500">{t.dashboard.startDate}</p>
+                </div>
                 <p className="font-semibold text-gray-900">{mockWakaTimeData.startDate}</p>
               </motion.div>
               <motion.div
                 whileHover={{ y: -2 }}
-                className="bg-white rounded-xl border border-gray-200 p-4"
+                className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
               >
-                <p className="text-sm text-gray-500 mb-1">{t.dashboard.endDate}</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <Calendar className="w-4 h-4 text-gray-400" />
+                  <p className="text-sm text-gray-500">{t.dashboard.endDate}</p>
+                </div>
                 <p className="font-semibold text-gray-900">{mockWakaTimeData.endDate}</p>
               </motion.div>
               <motion.div
                 whileHover={{ y: -2 }}
-                className="bg-white rounded-xl border border-gray-200 p-4"
+                className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
               >
-                <p className="text-sm text-gray-500 mb-1">{t.dashboard.avgDailyCoding}</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <Timer className="w-4 h-4 text-gray-400" />
+                  <p className="text-sm text-gray-500">{t.dashboard.avgDailyCoding}</p>
+                </div>
                 <p className="font-semibold text-gray-900">{mockWakaTimeData.averageDailyTime}</p>
               </motion.div>
               <motion.div
                 whileHover={{ y: -2 }}
-                className="bg-white rounded-xl border border-gray-200 p-4"
+                className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
               >
-                <p className="text-sm text-gray-500 mb-1">{t.dashboard.totalThisWeek}</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <Clock className="w-4 h-4 text-gray-400" />
+                  <p className="text-sm text-gray-500">{t.dashboard.totalThisWeek}</p>
+                </div>
                 <p className="font-semibold text-gray-900">{mockWakaTimeData.totalTime}</p>
               </motion.div>
             </div>
