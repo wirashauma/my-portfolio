@@ -129,6 +129,48 @@ const projects: Project[] = [
     endDate: '2026-03-15',
     link: '/projects/icebot',
   },
+  {
+    id: 6,
+    name: 'PetaWaktu',
+    description:
+      'Gamified timeline & quiz app untuk belajar sejarah. Menggabungkan kuis interaktif, leaderboard, dan peta waktu dengan role guru, siswa, dan admin.',
+    technologies: [
+      'Flutter',
+      'Dart',
+      'Firebase Auth',
+      'Cloud Firestore',
+      'Groq API',
+      'Cloudinary',
+    ],
+    image: '/projects/petawaktu.png',
+    platform: 'Mobile',
+    origin: 'Personal',
+    role: 'Full Stack',
+    startDate: '2025-11-24',
+    endDate: '2026-12-23',
+    link: '/projects/petawaktu',
+  },
+  {
+    id: 7,
+    name: 'ChatApp',
+    description:
+      'Simple real-time chat app dengan alur auth lengkap (OTP, setup profil) dan percakapan 1-1 berbasis Firebase Auth & Firestore.',
+    technologies: [
+      'Flutter',
+      'Dart',
+      'Firebase Auth',
+      'Cloud Firestore',
+      'Cloudinary',
+      'image_picker',
+    ],
+    image: '/projects/chatapp.png',
+    platform: 'Mobile',
+    origin: 'Personal',
+    role: 'Full Stack',
+    startDate: '2025-11-11',
+    endDate: '2025-12-14',
+    link: '/projects/chatapp',
+  },
 ];
 
 // Filter badge colors
