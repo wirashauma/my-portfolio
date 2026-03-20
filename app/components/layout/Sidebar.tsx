@@ -13,12 +13,9 @@ import {
   Mail,
   Menu,
   X,
-  Sun,
-  Moon,
   CheckCircle2,
 } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { useTheme } from '../../contexts/ThemeContext';
 
 type NavKey = 'home' | 'about' | 'achievements' | 'projects' | 'dashboard' | 'contact';
 
@@ -47,7 +44,6 @@ interface SidebarContentProps {
  */
 function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
   const { language, toggleLanguage, t } = useLanguage();
-  const { isDark, toggleTheme } = useTheme();
 
   return (
     <div className="flex flex-col h-full bg-(--sidebar-bg)">
@@ -97,14 +93,13 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
           @wirashauma
         </motion.p>
 
-        {/* Language Switcher & Theme Toggle */}
+        {/* Language Switcher */}
         <motion.div
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.4 }}
-          className="flex items-center justify-center gap-3 mt-4"
+          className="flex items-center justify-center mt-4"
         >
-          {/* Language Switcher */}
           <div className="flex items-center bg-(--hover-bg) rounded-full p-1">
             <button
               onClick={toggleLanguage}
@@ -125,28 +120,6 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
               }`}
             >
               ID
-            </button>
-          </div>
-
-          {/* Theme Toggle */}
-          <div className="flex items-center bg-(--hover-bg) rounded-full p-1">
-            <button
-              onClick={toggleTheme}
-              className={`p-1.5 rounded-full transition-all ${
-                !isDark ? 'bg-(--card-bg) shadow-sm' : 'text-(--text-secondary)'
-              }`}
-              aria-label="Light mode"
-            >
-              <Sun className={`w-4 h-4 ${!isDark ? 'text-amber-500' : 'text-(--text-muted)'}`} />
-            </button>
-            <button
-              onClick={toggleTheme}
-              className={`p-1.5 rounded-full transition-all ${
-                isDark ? 'bg-(--card-bg) shadow-sm' : 'text-(--text-secondary)'
-              }`}
-              aria-label="Dark mode"
-            >
-              <Moon className={`w-4 h-4 ${isDark ? 'text-emerald-400' : 'text-(--text-muted)'}`} />
             </button>
           </div>
         </motion.div>
