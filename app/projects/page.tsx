@@ -121,7 +121,7 @@ const projects: Project[] = [
     description:
       'Full-stack project-based learning platform for campus with dashboard mahasiswa & dosen, SQL lab, AI feedback, dan manajemen project end-to-end.',
     technologies: ['Next.js', 'Tailwind CSS', 'Node.js', 'Prisma', 'PostgreSQL', 'Socket.IO'],
-    image: '/projects/icebot.png',
+    image: '/projects/icebot/cover.png',
     platform: 'Web',
     origin: 'Client',
     role: 'Backend',

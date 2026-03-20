@@ -13,6 +13,7 @@ import {
   Check,
 } from 'lucide-react';
 import { ScrollReveal, StaggerItem } from '../../components/ScrollReveal';
+import Image from 'next/image';
 
 /**
  * Hero Section
@@ -343,6 +344,87 @@ function DevelopModuleSection() {
 }
 
 /**
+ * Visual Overview Section (Screenshots)
+ */
+function VisualOverviewSection() {
+  const screenshots = [
+    {
+      src: '/projects/icebot/canvas_erd.png',
+      alt: 'Tampilan canvas ERD di IceBot yang digunakan mahasiswa untuk mendesain struktur database.',
+      title: 'Canvas ERD Mahasiswa',
+      description:
+        'Canvas ERD interaktif tempat mahasiswa menyusun entitas, relasi, dan atribut sebelum masuk ke tahap implementasi SQL. Data ERD ini dipakai sebagai dasar validasi skema di backend.',
+    },
+    {
+      src: '/projects/icebot/canvas_sql.png',
+      alt: 'Editor SQL di IceBot dengan panel hasil eksekusi query.',
+      title: 'SQL Lab & Eksekusi Query',
+      description:
+        'SQL lab berbasis browser dengan editor mirip IDE: mahasiswa menulis query, menjalankannya terhadap database sandbox, dan menyimpan history untuk kebutuhan penilaian dan review dosen.',
+    },
+    {
+      src: '/projects/icebot/lecturer_analytics.png',
+      alt: 'Halaman analytics dosen yang memperlihatkan progres kelas dan penggunaan AI.',
+      title: 'Dashboard Analytics Dosen',
+      description:
+        'Dashboard dosen yang menampilkan ringkasan progres kelas, tingkat penyelesaian modul, dan metrik penggunaan AI sehingga dosen bisa memantau kualitas proses belajar secara cepat.',
+    },
+    {
+      src: '/projects/icebot/lecturer_review.png',
+      alt: 'Halaman review tugas dosen dengan daftar submission mahasiswa.',
+      title: 'Halaman Review Submission',
+      description:
+        'Halaman review tugas di mana dosen dapat melihat submission mahasiswa per modul, membaca refleksi, serta memberikan feedback manual yang dikombinasikan dengan masukan dari AI.',
+    },
+  ];
+
+  return (
+    <section className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <div className="max-w-6xl mx-auto">
+        <ScrollReveal>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">
+            Tampilan Layar Utama IceBot
+          </h2>
+          <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+            Beberapa screenshot kunci yang menggambarkan bagaimana mahasiswa dan dosen
+            berinteraksi dengan platform: mulai dari mendesain ERD, menjalankan SQL,
+            hingga memonitor progres kelas.
+          </p>
+        </ScrollReveal>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {screenshots.map((shot) => (
+            <ScrollReveal key={shot.src}>
+              <motion.article
+                whileHover={{ y: -4 }}
+                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all border border-gray-200 flex flex-col h-full"
+              >
+                <div className="relative w-full aspect-video bg-gray-100">
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    priority={false}
+                  />
+                </div>
+                <div className="p-5 flex-1 flex flex-col">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{shot.title}</h3>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    {shot.description}
+                  </p>
+                </div>
+              </motion.article>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
  * Challenges & Solutions Section
  */
 function ChallengesSection() {
@@ -478,6 +560,7 @@ export default function IceBotProjectPage() {
       <TechStackSection />
       <RoutingSection />
       <DevelopModuleSection />
+      <VisualOverviewSection />
       <ChallengesSection />
       <CTASection />
     </main>
