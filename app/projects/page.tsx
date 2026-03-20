@@ -171,6 +171,27 @@ const projects: Project[] = [
     endDate: '2025-12-14',
     link: '/projects/chatapp',
   },
+  {
+    id: 8,
+    name: 'Titipin',
+    description:
+      'Titip beli & antar makanan/jajanan dengan dua role utama (user & deliverer), sistem penawaran ongkir, rating, dan chat realtime per pesanan.',
+    technologies: [
+      'Flutter',
+      'Dart',
+      'Firebase Auth',
+      'Cloud Firestore',
+      'Firebase Storage',
+      'intl',
+    ],
+    image: '/projects/titipin.png',
+    platform: 'Mobile',
+    origin: 'Personal',
+    role: 'Full Stack',
+    startDate: '2025-10-01',
+    endDate: '2025-12-12',
+    link: '/projects/titipin',
+  },
 ];
 
 // Filter badge colors
