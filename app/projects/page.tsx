@@ -147,7 +147,7 @@ const projects: Project[] = [
     origin: 'Personal',
     role: 'Full Stack',
     startDate: '2025-11-24',
-    endDate: '2026-12-23',
+    endDate: '2025-12-23',
     link: '/projects/petawaktu',
   },
   {
