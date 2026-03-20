@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Wira Shauma | Mobile Engineer & Full-Stack Developer",
-  description: "Portfolio showcasing mobile and web development projects. Specialized in Flutter, React Native, Next.js, and Node.js.",
-  keywords: ["portfolio", "mobile developer", "flutter", "react native", "next.js", "full-stack"],
+  title: "Wira Shauma | Full-Stack Developer",
+  description: "Portfolio full-stack yang menampilkan proyek mobile dan web. Berfokus pada Next.js, Node.js, Flutter, dan ekosistem modern lainnya.",
+  keywords: ["portfolio", "full-stack developer", "next.js", "node.js", "flutter", "typescript"],
   authors: [
     {
       name: "Wira Shauma",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://your-portfolio.com",
     siteName: "Wira Shauma Portfolio",
-    title: "Wira Shauma | Mobile Engineer & Full-Stack Developer",
+    title: "Wira Shauma | Full-Stack Developer",
     description: "Portfolio showcasing mobile and web development projects.",
     images: [
       {
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wira Shauma | Mobile Engineer & Full-Stack Developer",
+    title: "Wira Shauma | Full-Stack Developer",
     description: "Portfolio showcasing mobile and web development projects.",
     images: ["https://your-portfolio.com/og-image.png"],
     creator: "@wirashauma",
@@ -68,7 +68,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  colorScheme: "dark light",
+  // Force light color scheme only
+  colorScheme: "light",
 };
 
 export default function RootLayout({
