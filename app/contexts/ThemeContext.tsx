@@ -13,8 +13,8 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Store for theme preference
-let themeStore: Theme = 'dark';
+// Store for theme preference (force light theme only)
+let themeStore: Theme = 'light';
 const themeListeners = new Set<() => void>();
 
 function getThemeSnapshot(): Theme {
@@ -22,7 +22,7 @@ function getThemeSnapshot(): Theme {
 }
 
 function getServerSnapshot(): Theme {
-  return 'dark';
+  return 'light';
 }
 
 function subscribeToTheme(callback: () => void): () => void {
@@ -30,40 +30,31 @@ function subscribeToTheme(callback: () => void): () => void {
   return () => themeListeners.delete(callback);
 }
 
-function applyThemeToDOM(theme: Theme) {
+function applyThemeToDOM() {
   if (typeof document !== 'undefined') {
     const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-      root.classList.remove('light');
-    } else {
-      root.classList.add('light');
-      root.classList.remove('dark');
-    }
+    // Always enforce light mode
+    root.classList.add('light');
+    root.classList.remove('dark');
   }
 }
 
-function setThemeStore(theme: Theme) {
-  themeStore = theme;
+function setThemeStore() {
+  // Persist but always store light theme
+  themeStore = 'light';
   if (typeof window !== 'undefined') {
-    localStorage.setItem('theme', theme);
+    localStorage.setItem('theme', 'light');
   }
-  applyThemeToDOM(theme);
+  applyThemeToDOM();
   themeListeners.forEach(listener => listener());
 }
 
 // Initialize from localStorage on module load (client-side only)
 if (typeof window !== 'undefined') {
-  const savedTheme = localStorage.getItem('theme') as Theme;
-  if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
-    themeStore = savedTheme;
-  } else {
-    // Check system preference
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    themeStore = prefersDark ? 'dark' : 'light';
-  }
-  // Apply on initialization
-  applyThemeToDOM(themeStore);
+  // Force light theme regardless of previous preference or system setting
+  themeStore = 'light';
+  localStorage.setItem('theme', 'light');
+  applyThemeToDOM();
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -75,20 +66,21 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   // Apply theme on mount to ensure DOM matches
   useEffect(() => {
-    applyThemeToDOM(theme);
+    applyThemeToDOM();
   }, [theme]);
 
-  const setTheme = (newTheme: Theme) => {
-    setThemeStore(newTheme);
+  const setTheme = () => {
+    // Ignore requested theme and keep light
+    setThemeStore();
   };
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
+    // Dark mode disabled – always keep light theme
+    setTheme();
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, isDark: theme === 'dark' }}>
+    <ThemeContext.Provider value={{ theme: 'light', setTheme, toggleTheme, isDark: false }}>
       {children}
     </ThemeContext.Provider>
   );
