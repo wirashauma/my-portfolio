@@ -54,7 +54,10 @@ interface Project {
   platform: Platform;
   origin: Origin;
   role: Role;
-  featured?: boolean;
+  /** Optional start date of the project (ISO string) */
+  startDate?: string;
+  /** Optional end / completion date of the project (ISO string) */
+  endDate?: string;
   link?: string;
   github?: string;
 }
@@ -70,7 +73,8 @@ const projects: Project[] = [
     platform: 'Mobile',
     origin: 'Client',
     role: 'Full Stack',
-    featured: true,
+    startDate: '2025-12-13',
+    endDate: '2026-01-25',
     link: '/projects/barasiah',
   },
   {
@@ -82,7 +86,8 @@ const projects: Project[] = [
     platform: 'Mobile',
     origin: 'Client',
     role: 'Full Stack',
-    featured: true,
+    startDate: '2025-12-18',
+    endDate: '2025-12-19',
   },
   {
     id: 3,
@@ -93,7 +98,8 @@ const projects: Project[] = [
     platform: 'Web',
     origin: 'Client',
     role: 'Frontend',
-    featured: true,
+    startDate: '2026-01-02',
+    endDate: '2026-01-27',
   },
   // Personal Projects
   {
@@ -105,51 +111,23 @@ const projects: Project[] = [
     platform: 'Web',
     origin: 'Personal',
     role: 'Full Stack',
-    featured: true,
+    endDate: '2024-12-01',
     link: 'https://wirashauma.dev',
     github: 'https://github.com/wirashauma/my-portfolio',
   },
   {
     id: 5,
-    name: 'Berbagi.link',
-    description: 'Mini-website platform for online businesses to create link-in-bio pages with analytics and customization.',
-    technologies: ['Kotlin', 'Android', 'Firebase'],
-    image: '/projects/berbagi-link.png',
-    platform: 'Mobile',
-    origin: 'Personal',
-    role: 'Full Stack',
-    github: 'https://github.com/wirashauma/berbagi-link',
-  },
-  {
-    id: 6,
-    name: 'Presensi Internal',
-    description: 'Internal attendance management system with geolocation tracking, real-time reporting, and leave management.',
-    technologies: ['Flutter', 'Firebase', 'Dart'],
-    image: '/projects/presensi.png',
-    platform: 'Mobile',
-    origin: 'Personal',
-    role: 'Full Stack',
-  },
-  {
-    id: 7,
-    name: 'Robust Fitness',
-    description: 'Fitness tracking web app with workout plans, progress visualization, and nutrition tracking.',
-    technologies: ['React', 'Supabase', 'TypeScript', 'Chart.js'],
-    image: '/projects/robust-fitness.png',
+    name: 'IceBot Platform',
+    description:
+      'Full-stack project-based learning platform for campus with dashboard mahasiswa & dosen, SQL lab, AI feedback, dan manajemen project end-to-end.',
+    technologies: ['Next.js', 'Tailwind CSS', 'Node.js', 'Prisma', 'PostgreSQL', 'Socket.IO'],
+    image: '/projects/icebot.png',
     platform: 'Web',
-    origin: 'Personal',
-    role: 'Frontend',
-  },
-  {
-    id: 8,
-    name: 'Task Management API',
-    description: 'RESTful API for task management with authentication, real-time updates, and team collaboration features.',
-    technologies: ['Node.js', 'Express', 'PostgreSQL', 'Redis'],
-    image: '/projects/task-api.png',
-    platform: 'Web',
-    origin: 'Personal',
+    origin: 'Client',
     role: 'Backend',
-    github: 'https://github.com/wirashauma/task-api',
+    startDate: '2026-01-20',
+    endDate: '2026-03-15',
+    link: '/projects/icebot',
   },
 ];
 
@@ -173,6 +151,27 @@ const roleColors: Record<Role, string> = {
 function ProjectCard({ project }: { project: Project }) {
   const { t } = useLanguage();
 
+  const formatDate = (value: string) => {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return date.toLocaleDateString(undefined, {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+  };
+
+  const renderDateRange = () => {
+    if (!project.startDate && !project.endDate) return null;
+    if (project.startDate && project.endDate) {
+      if (project.startDate === project.endDate) {
+        return formatDate(project.startDate);
+      }
+      return `${formatDate(project.startDate)} – ${formatDate(project.endDate)} `;
+    }
+    return formatDate(project.startDate ?? project.endDate!);
+  };
+
   return (
     <motion.div
       whileHover={{ y: -4 }}
@@ -185,11 +184,6 @@ function ProjectCard({ project }: { project: Project }) {
           alt={project.name}
           className="w-full h-full"
         />
-        {project.featured && (
-          <span className="absolute top-3 right-3 px-2 py-1 bg-red-500 text-white text-xs font-semibold rounded-md flex items-center gap-1">
-            📌 {t.projects.featured}
-          </span>
-        )}
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-1">
           <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${platformColors[project.platform]}`}>
@@ -225,6 +219,9 @@ function ProjectCard({ project }: { project: Project }) {
             {project.role}
           </span>
         </div>
+        {renderDateRange() && (
+          <p className="text-xs text-(--text-muted) mb-1">{renderDateRange()}</p>
+        )}
         <p className="text-(--text-secondary) text-sm mb-4 flex-1 line-clamp-3">{project.description}</p>
         
         {/* Technologies */}
@@ -275,7 +272,7 @@ export default function ProjectsPage() {
   const [roleFilter, setRoleFilter] = useState<Role | 'all'>('all');
 
   const filteredProjects = useMemo(() => {
-    return projects.filter((project) => {
+    const result = projects.filter((project) => {
       // Search filter
       const matchesSearch =
         searchQuery === '' ||
@@ -294,10 +291,14 @@ export default function ProjectsPage() {
 
       return matchesSearch && matchesPlatform && matchesOrigin && matchesRole;
     });
-  }, [searchQuery, platformFilter, originFilter, roleFilter]);
 
-  const featuredProjects = filteredProjects.filter((p) => p.featured);
-  const otherProjects = filteredProjects.filter((p) => !p.featured);
+    // Sort by end date (or start date) descending – newest projects first
+    return result.sort((a, b) => {
+      const aTime = new Date(b.endDate ?? b.startDate ?? 0).getTime();
+      const bTime = new Date(a.endDate ?? a.startDate ?? 0).getTime();
+      return aTime - bTime;
+    });
+  }, [searchQuery, platformFilter, originFilter, roleFilter]);
 
   const clearFilters = () => {
     setSearchQuery('');
@@ -413,29 +414,8 @@ export default function ProjectsPage() {
           </div>
         )}
 
-        {/* Featured Projects */}
-        {featuredProjects.length > 0 && (
-          <>
-            <ScrollReveal delay={0.1}>
-              <h2 className="text-lg font-semibold text-(--text-primary) mb-6 flex items-center gap-2">
-                <span className="text-red-500">📌</span> {t.projects.featured}
-              </h2>
-            </ScrollReveal>
-
-            <StaggerContainer staggerDelay={0.1}>
-              <div className="grid md:grid-cols-2 gap-6 mb-12">
-                {featuredProjects.map((project) => (
-                  <StaggerItem key={project.id}>
-                    <ProjectCard project={project} />
-                  </StaggerItem>
-                ))}
-              </div>
-            </StaggerContainer>
-          </>
-        )}
-
-        {/* Other Projects */}
-        {otherProjects.length > 0 && (
+        {/* All Projects */}
+        {filteredProjects.length > 0 && (
           <>
             <ScrollReveal delay={0.2}>
               <h2 className="text-lg font-semibold text-(--text-primary) mb-6">{t.projects.allProjects}</h2>
@@ -443,7 +423,7 @@ export default function ProjectsPage() {
 
             <StaggerContainer staggerDelay={0.08}>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {otherProjects.map((project) => (
+                {filteredProjects.map((project) => (
                   <StaggerItem key={project.id}>
                     <ProjectCard project={project} />
                   </StaggerItem>
