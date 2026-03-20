@@ -74,12 +74,12 @@ function ScreensSection() {
       description:
         'Serangkaian screen yang mengatur alur login, verifikasi OTP, dan setup profil pertama kali.',
       items: [
-        'AuthCheckScreen — home awal yang listen authStateChanges dan memutuskan ke login atau cek profil.',
-        'CheckUserSetupScreen — cek apakah profil users/{uid} sudah ada di Firestore untuk bedakan user lama/baru.',
-        'LoginScreen — login email & password dengan handling error user-not-found, wrong-password, dll.',
-        'RegisterScreen — registrasi email/password + validasi konfirmasi password, lalu arahkan ke SetupProfileScreen.',
-        'OtpScreen — verifikasi OTP 6 digit untuk login via nomor HP dengan AuthService.sendOtp & verifyOtp.',
-        'SetupProfileScreen — isi nama lengkap & bio, simpan profil pertama kali ke Firestore sebelum masuk Home.',
+        'AuthCheckScreen — home awal yang listen FirebaseAuth.instance.authStateChanges(), menampilkan loading singkat, lalu memutuskan ke LoginScreen atau CheckUserSetupScreen.',
+        'CheckUserSetupScreen — screen “pintar” yang mengambil dokumen users/{uid} di Firestore untuk bedakan user lama (langsung ke HomeScreen) dan user baru (ke SetupProfileScreen).',
+        'LoginScreen — login email & password dengan validasi tidak boleh kosong dan handling error user-not-found, wrong-password, serta fallback “Terjadi kesalahan. Coba lagi.”.',
+        'RegisterScreen — registrasi email/password + konfirmasi password, validasi keduanya harus sama, lalu pushAndRemoveUntil ke SetupProfileScreen.',
+        'OtpScreen — verifikasi OTP 6 digit untuk login via nomor HP dengan AuthService.sendOtp dan AuthService.verifyOtp, lengkap dengan Snackbar jika OTP tidak valid.',
+        'SetupProfileScreen — isi nama lengkap (wajib) dan bio (opsional), simpan profil via FirestoreService.saveUserProfile lalu hapus riwayat route dan arahkan ke HomeScreen.',
       ],
     },
     {
@@ -97,11 +97,11 @@ function ScreensSection() {
       description:
         'Fokus ke percakapan 1-1 dengan UX yang familiar: list percakapan, bubble chat, auto-scroll, dan read receipt.',
       items: [
-        'ChatListScreen — daftar semua percakapan user (chat_rooms) dengan state loading, error, dan empty state ramah.',
-        'FAB "+" di ChatListScreen — dialog cari user by email untuk mulai chat baru, lengkap dengan error jika user tidak ditemukan atau email diri sendiri.',
-        'ChatDetailScreen — halaman 1-1 chat dengan avatar, nama penerima, stream pesan real-time, dan input text.',
-        'Penanda tanggal otomatis — separator seperti "Hari Ini", "Kemarin", atau d MMM yyyy di antara pesan.',
-        'Read receipt — markMessagesAsRead dipanggil saat screen dibuka & saat ada pesan masuk yang belum dibaca.',
+        'ChatListScreen — daftar semua percakapan user (chat_rooms) dari FirestoreService.getChatRoomsStream(), dengan loading indicator, error handling, dan empty state “Anda belum punya percakapan. Tekan + untuk memulai chat!”.',
+        'FAB "+" di ChatListScreen — membuka AlertDialog pencarian user by email dengan loading state, errorText jika user tidak ditemukan, dan proteksi agar tidak bisa chat dengan email sendiri.',
+        'ChatDetailScreen — halaman 1-1 chat dengan InitialAvatar, nama display penerima, stream pesan real-time dari sub-koleksi messages di chat_rooms/{chatRoomId}, dan input TextField + tombol kirim.',
+        'Penanda tanggal otomatis — setiap hari baru diberi separator “Hari Ini”, “Kemarin”, atau format d MMM yyyy menggunakan intl, plus label jam kecil di bawah bubble.',
+        'Read receipt — FirestoreService.markMessagesAsRead(recipient.uid) dipanggil saat initState dan saat stream mendeteksi pesan baru yang belum dibaca, sehingga ChatBubble bisa menampilkan indikator baca.',
       ],
     },
     {
@@ -110,12 +110,12 @@ function ScreensSection() {
       description:
         'Kumpulan screen untuk mengelola profil, password, preferensi chat, notifikasi, dan bantuan.',
       items: [
-        'ProfileScreen — menampilkan avatar, nama, bio, serta menu ke Account, Chat Settings, Notifications, dan Help.',
-        'AccountScreen — edit profil (display name, bio, foto profil) dengan upload ke Cloudinary.',
-        'ChangePasswordScreen — ubah password dengan re-authenticate via EmailAuthProvider.',
+        'ProfileScreen — FutureBuilder ke FirestoreService.getUserProfile(), menampilkan InitialAvatar dengan photoUrl atau inisial, nama, bio, menu navigasi, tampilan foto full-screen dengan InteractiveViewer, serta tombol Logout yang memanggil FirebaseAuth.instance.signOut().',
+        'AccountScreen — edit profil (display name wajib, bio multi-line, foto profil) dengan image_picker + upload ke Cloudinary dan Snackbar “Profil diperbarui” setelah sukses.',
+        'ChangePasswordScreen — ubah password dengan validasi field, re-authenticate via EmailAuthProvider, dan handling error wrong-password / requires-recent-login.',
         'ChatSettingsScreen — pengaturan tampilan chat (read receipts, typing indicator, font size; saat ini UI stub).',
         'NotificationsScreen — pengaturan push notification & sound (UI stub, siap dihubungkan ke FCM).',
-        'HelpScreen — FAQ seputar login, lupa password, ganti profil, dan cara mulai chat baru.',
+        'HelpScreen — daftar FAQ (cara sign in, lupa password, ganti foto/nama profil, cara mulai chat baru), plus section Support (email wirashaumaa@gmail.com) dan About “ChatApp — a simple real-time chat built with Flutter & Firebase.”.',
       ],
     },
   ];
@@ -272,22 +272,40 @@ function TechStackSection() {
     {
       name: 'Bahasa & Framework',
       icon: Smartphone,
-      items: ['Flutter', 'Dart', 'Material Design'],
+      items: [
+        'Flutter (MaterialApp, ThemeData)',
+        'Dart SDK >=3.4.0 <4.0.0',
+        'Material Design components',
+      ],
     },
     {
       name: 'Backend & Auth',
       icon: Shield,
-      items: ['firebase_core', 'firebase_auth', 'cloud_firestore'],
+      items: [
+        'firebase_core (Firebase.initializeApp + firebase_options.dart)',
+        'firebase_auth (email/password + phone auth + OTP)',
+        'cloud_firestore (users, chat_rooms, sub-koleksi messages)',
+        'firebase_storage (disiapkan untuk upload file/voice note ke depan)',
+      ],
     },
     {
       name: 'Profil & Media',
       icon: Users,
-      items: ['image_picker', 'Cloudinary', 'InitialAvatar widget'],
+      items: [
+        'image_picker (pilih gambar dari gallery/kamera)',
+        'Cloudinary REST API (unsigned upload_preset)',
+        'InitialAvatar widget (fallback inisial/foto lokal)',
+      ],
     },
     {
       name: 'UI & Experience',
       icon: BookOpen,
-      items: ['Custom Theme', 'Form validation', 'SnackBar feedback'],
+      items: [
+        'Custom Theme (warna, typography)',
+        'Form validation untuk field auth & profil',
+        'SnackBar feedback untuk success/error',
+        'cupertino_icons untuk ikon bergaya iOS',
+      ],
     },
     {
       name: 'Keamanan Account',
@@ -297,7 +315,12 @@ function TechStackSection() {
     {
       name: 'Lainnya',
       icon: PhoneCall,
-      items: ['OTP flow (AuthService)', 'Routing manual via Navigator'],
+      items: [
+        'OTP flow (AuthService.sendOtp & verifyOtp)',
+        'HTTP (package http untuk CloudinaryService, multipart upload)',
+        'intl (format tanggal & jam di ChatDetailScreen)',
+        'Routing manual via Navigator.push / pushReplacement',
+      ],
     },
   ];
 
@@ -367,6 +390,11 @@ function ArchitectureSection() {
       path: 'services/',
       desc: 'Abstraksi Firebase & eksternal service.',
       items: ['auth_service.dart', 'firestore_service.dart', 'cloudinary_service.dart'],
+    },
+    {
+      path: 'models/',
+      desc: 'Model data untuk user dan entitas chat.',
+      items: ['user_model.dart'],
     },
     {
       path: 'widgets/',
