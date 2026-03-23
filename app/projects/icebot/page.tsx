@@ -404,7 +404,7 @@ function VisualOverviewSection() {
                     src={shot.src}
                     alt={shot.alt}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     priority={false}
                   />
