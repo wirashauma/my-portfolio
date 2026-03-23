@@ -23,14 +23,14 @@ function SafeProjectImage({ src, alt, className }: { src: string; alt: string; c
   }
 
   return (
-    <div className={`${className} relative bg-(--card-bg)`}>
+    <div className={`${className} relative bg-(--card-bg) flex items-center justify-center`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt={alt}
         onError={() => setImageError(true)}
         onLoad={() => setImageLoaded(true)}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
         loading="lazy"
         decoding="async"
       />
@@ -241,7 +241,7 @@ function ProjectCard({ project }: { project: Project }) {
       className="bg-(--card-bg) rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-(--card-border) h-full flex flex-col"
     >
       {/* Image */}
-      <div className="relative h-48 bg-linear-to-br from-emerald-100 to-cyan-100 overflow-hidden">
+      <div className="relative aspect-video bg-linear-to-br from-emerald-100 to-cyan-100 overflow-hidden">
         <SafeProjectImage
           src={project.image}
           alt={project.name}
