@@ -30,28 +30,6 @@ interface Experience {
   technologies?: string[];
 }
 
-const experiences: Experience[] = [
-  {
-    id: 1,
-    title: 'Full Stack Developer',
-    company: 'Howarts Studio',
-    location: 'Padang, Indonesia',
-    period: 'Dec 2025 - Present',
-    duration: 'Ongoing',
-    type: 'Full-time',
-    mode: 'Onsite',
-    description: 'Collaborating in a studio environment to deliver real-world digital solutions. Involved in the development of Barasiah App, Sumatrans App, and Bukuinduk App.',
-    achievements: [
-      'Developed Barasiah App - A cleaning service marketplace platform with real-time booking and tracking',
-      'Built Sumatrans App - An integrated transportation management system for bus operators',
-      'Created Bukuinduk App - A comprehensive school record management system for Dinas Pendidikan',
-      'Implemented scalable architectures handling 10,000+ daily active users',
-      'Led cross-functional collaboration between design, development, and business teams',
-    ],
-    technologies: ['Next.js', 'TypeScript', 'Flutter', 'Kotlin', 'Node.js', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
-  },
-];
-
 const modeIcons: Record<string, React.ReactNode> = {
   Remote: <Globe className="w-4 h-4" />,
   Onsite: <Building2 className="w-4 h-4" />,
@@ -73,6 +51,7 @@ const typeColors: Record<string, string> = {
 
 function TimelineItem({ exp, index }: { exp: Experience; index: number }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <motion.div
@@ -102,10 +81,10 @@ function TimelineItem({ exp, index }: { exp: Experience; index: number }) {
             <p className="text-emerald-600 font-semibold">{exp.company}</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-full ${typeColors[exp.type]}`}>
+            <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-full ${typeColors[exp.type] || 'bg-gray-100 text-gray-700'}`}>
               {exp.type}
             </span>
-            <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-full ${modeColors[exp.mode]}`}>
+            <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-full ${modeColors[exp.mode] || 'bg-gray-100 text-gray-700'}`}>
               {modeIcons[exp.mode]}
               {exp.mode}
             </span>
@@ -128,15 +107,15 @@ function TimelineItem({ exp, index }: { exp: Experience; index: number }) {
         {/* Expand/Collapse Button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-emerald-600 transition-colors"
+          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
         >
           {isExpanded ? (
             <>
-              Hide details <ChevronUp className="w-4 h-4" />
+              {t.about.hideDetails} <ChevronUp className="w-4 h-4" />
             </>
           ) : (
             <>
-              Show details <ChevronDown className="w-4 h-4" />
+              {t.about.showDetails} <ChevronDown className="w-4 h-4" />
             </>
           )}
         </button>
@@ -161,7 +140,7 @@ function TimelineItem({ exp, index }: { exp: Experience; index: number }) {
                 {exp.achievements && exp.achievements.length > 0 && (
                   <div className="mb-4">
                     <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                      <span className="text-emerald-600">★</span> Key Achievements
+                      <span className="text-emerald-600">★</span> {t.about.keyAchievements}
                     </h4>
                     <ul className="space-y-1">
                       {exp.achievements.map((achievement, idx) => (
@@ -177,7 +156,7 @@ function TimelineItem({ exp, index }: { exp: Experience; index: number }) {
                 {/* Technologies */}
                 {exp.technologies && exp.technologies.length > 0 && (
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Technologies:</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">{t.about.technologies}</h4>
                     <div className="flex flex-wrap gap-2">
                       {exp.technologies.map((tech) => (
                         <span
@@ -201,6 +180,13 @@ function TimelineItem({ exp, index }: { exp: Experience; index: number }) {
 
 export default function AboutPage() {
   const { t } = useLanguage();
+
+  const experiences = t.about.experiencesList.map((exp) => ({
+    ...exp,
+    type: exp.type as Experience['type'],
+    mode: exp.mode as Experience['mode'],
+    technologies: ['Next.js', 'TypeScript', 'Flutter', 'Kotlin', 'Node.js', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
+  }));
   
   return (
     <div className="min-h-screen bg-white">

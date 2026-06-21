@@ -144,14 +144,14 @@ function ContactForm() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || 'Failed to send message');
+        throw new Error(data.error || t.contact.errorMsg);
       }
 
-      setSuccess('Message sent successfully!');
+      setSuccess(t.contact.successMsg);
       setFormData({ name: '', email: '', message: '' });
     } catch (err) {
       console.error(err);
-      setError('Failed to send message. Please try again later.');
+      setError(t.contact.errorMsg);
     } finally {
       setIsSubmitting(false);
     }

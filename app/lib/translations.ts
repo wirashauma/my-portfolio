@@ -29,6 +29,26 @@ export const translations = {
       featuredProjects: 'Featured Projects',
       featuredSubtitle: 'A showcase of my recent work.',
       viewAll: 'View all',
+      featured: 'Featured',
+      viewProject: 'View Project',
+      quickStats: {
+        experience: 'Years Experience',
+        projects: 'Projects Completed',
+        achievements: 'Certificates Earned',
+        contributions: 'GitHub Contributions',
+      },
+      featuredProjectsList: [
+        {
+          id: 1,
+          name: 'Personal Portfolio',
+          description: 'Personal website & portfolio, built from scratch using Next.js, TypeScript, Tailwind...',
+        },
+        {
+          id: 2,
+          name: 'Barasiah',
+          description: 'On-demand cleaning service marketplace with real-time tracking and secure payments.',
+        },
+      ],
     },
     // About Page
     about: {
@@ -51,6 +71,26 @@ export const translations = {
       hideDetails: 'Hide details',
       keyAchievements: 'Key Achievements',
       technologies: 'Technologies:',
+      experiencesList: [
+        {
+          id: 1,
+          title: 'Full Stack Developer',
+          company: 'Howarts Studio',
+          location: 'Padang, Indonesia',
+          period: 'Dec 2025 - Present',
+          duration: 'Ongoing',
+          type: 'Full-time',
+          mode: 'Onsite',
+          description: 'Collaborating in a studio environment to deliver real-world digital solutions. Involved in the development of Barasiah App, Sumatrans App, and Bukuinduk App.',
+          achievements: [
+            'Developed Barasiah App - A cleaning service marketplace platform with real-time booking and tracking',
+            'Built Sumatrans App - An integrated transportation management system for bus operators',
+            'Created Bukuinduk App - A comprehensive school record management system for Dinas Pendidikan',
+            'Implemented scalable architectures handling 10,000+ daily active users',
+            'Led cross-functional collaboration between design, development, and business teams',
+          ],
+        },
+      ],
     },
     // Projects Page
     projects: {
@@ -78,6 +118,72 @@ export const translations = {
       showing: 'Showing',
       of: 'of',
       projectsLabel: 'projects',
+      list: [
+        {
+          id: 1,
+          name: 'Barasiah App',
+          description: 'On-demand cleaning service marketplace connecting customers with professional cleaners. Features real-time booking, tracking, and secure payments.',
+          platform: 'Mobile',
+          origin: 'Client',
+          role: 'Full Stack',
+        },
+        {
+          id: 2,
+          name: 'Sumatrans App',
+          description: 'Integrated transportation management system for bus operators in Sumatera. Handles ticketing, scheduling, and fleet management.',
+          platform: 'Mobile',
+          origin: 'Client',
+          role: 'Full Stack',
+        },
+        {
+          id: 3,
+          name: 'BukuInduk App',
+          description: 'Comprehensive school record management system for Dinas Pendidikan Bukittinggi. Manages student data, grades, and administrative records.',
+          platform: 'Web',
+          origin: 'Client',
+          role: 'Frontend',
+        },
+        {
+          id: 4,
+          name: 'Personal Portfolio',
+          description: 'Modern personal website & portfolio built with Next.js, TypeScript, and Tailwind CSS. Features dark mode, i18n, and GitHub integration.',
+          platform: 'Web',
+          origin: 'Personal',
+          role: 'Full Stack',
+        },
+        {
+          id: 5,
+          name: 'IceBot Platform',
+          description: 'Full-stack project-based learning platform for campus with student & lecturer dashboard, SQL lab, AI feedback, and end-to-end project management.',
+          platform: 'Web',
+          origin: 'Client',
+          role: 'Backend',
+        },
+        {
+          id: 6,
+          name: 'PetaWaktu',
+          description: 'Gamified timeline & quiz app for history learning. Integrates interactive quizzes, leaderboards, and timelines with teacher, student, and admin roles.',
+          platform: 'Mobile',
+          origin: 'Personal',
+          role: 'Full Stack',
+        },
+        {
+          id: 7,
+          name: 'ChatApp',
+          description: 'Simple real-time chat app with complete auth flow (OTP, profile setup) and 1-on-1 conversations powered by Firebase Auth & Firestore.',
+          platform: 'Mobile',
+          origin: 'Personal',
+          role: 'Full Stack',
+        },
+        {
+          id: 8,
+          name: 'Titipin',
+          description: 'Delivery & personal shopper app for food/snacks with two main roles (user & deliverer), shipping bidding system, rating, and real-time chat per order.',
+          platform: 'Mobile',
+          origin: 'Personal',
+          role: 'Full Stack',
+        },
+      ],
     },
     // Achievements Page
     achievements: {
@@ -90,6 +196,13 @@ export const translations = {
       noResults: 'No certificates found',
       tryAdjusting: 'Try adjusting your search or filter criteria.',
       issuedOn: 'Issued on',
+      comingSoon: 'Coming Soon',
+      toBeAnnounced: 'To be announced',
+      list: [
+        { id: 1, title: 'Coming Soon', issuer: 'To be announced' },
+        { id: 2, title: 'Coming Soon', issuer: 'To be announced' },
+        { id: 3, title: 'Coming Soon', issuer: 'To be announced' },
+      ],
     },
     // Dashboard Page
     dashboard: {
@@ -111,6 +224,17 @@ export const translations = {
       totalThisWeek: 'Total This Week',
       dailyActivity: 'Daily Activity',
       languagesUsed: 'Languages Used',
+      ago: 'days ago',
+      timeFormat: '{hours} hr {minutes} mins',
+      days: {
+        Mon: 'Mon',
+        Tue: 'Tue',
+        Wed: 'Wed',
+        Thu: 'Thu',
+        Fri: 'Fri',
+        Sat: 'Sat',
+        Sun: 'Sun',
+      },
     },
     // Contact Page
     contact: {
@@ -133,6 +257,8 @@ export const translations = {
       message: 'Message',
       send: 'Send Message',
       goTo: 'Go to',
+      successMsg: 'Message sent successfully!',
+      errorMsg: 'Failed to send message. Please try again later.',
     },
     // Experience Page
     experience: {
@@ -140,6 +266,68 @@ export const translations = {
       subtitle: 'Professional journey in mobile and web development',
       keyAchievements: 'Key Achievements',
       technologies: 'Technologies:',
+      educationTitle: 'Education',
+      skillsTitle: 'Technical Skills',
+      ctaTitle: 'Interested in Working Together?',
+      ctaSubtitle: "Let's discuss how I can help bring your project to life",
+      ctaButton: 'Get in Touch',
+      experiencesList: [
+        {
+          id: 1,
+          title: 'Frontend Developer',
+          company: 'Dinas Pendidikan Bukittinggi',
+          period: '2025 - Present',
+          location: 'Bukittinggi, Indonesia',
+          description: 'Developed and maintained a comprehensive education management system serving multiple schools. Implemented responsive interfaces with React and Next.js, improving administrative efficiency by 40%. Collaborated with backend team to integrate complex features including student information management, grade tracking, and parent communication portals.',
+          achievements: [
+            'Reduced page load time by 35% through optimization',
+            'Implemented responsive design supporting 10,000+ daily active users',
+            'Led UI/UX improvements increasing user satisfaction by 45%',
+            'Mentored 2 junior developers',
+          ],
+        },
+        {
+          id: 2,
+          title: 'Mobile Engineer',
+          company: 'Barasiah App',
+          period: '2025 - Present',
+          location: 'Remote',
+          description: 'Built a feature-rich cleaning service marketplace platform connecting service providers with customers. Developed mobile applications using Flutter and React Native with real-time notifications, secure payment processing, and service tracking capabilities.',
+          achievements: [
+            'Achieved 4.8/5 app store rating',
+            'Implemented real-time tracking with 500+ concurrent users',
+            'Integrated Stripe payment processing',
+            'Built cross-platform solution reducing development time by 40%',
+          ],
+        },
+      ],
+      educationList: [
+        {
+          degree: 'Bachelor of Software Engineering',
+          school: 'Universitas Negeri Padang',
+          year: '2021 - Present',
+          focus: 'Focus on Mobile Development & Backend Systems',
+          details: 'Specialized in building scalable mobile and web applications with emphasis on user experience and performance optimization.',
+        },
+      ],
+      skillsCategories: [
+        {
+          category: 'Mobile Development',
+          skills: ['Flutter', 'React Native', 'Dart', 'iOS/Android Development'],
+        },
+        {
+          category: 'Web Development',
+          skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
+        },
+        {
+          category: 'Backend Development',
+          skills: ['Node.js', 'PostgreSQL', 'API Design', 'Database Optimization'],
+        },
+        {
+          category: 'Tools & Services',
+          skills: ['Git', 'Supabase', 'Firebase', 'Stripe Integration'],
+        },
+      ],
     },
     // Common
     common: {
@@ -178,6 +366,26 @@ export const translations = {
       featuredProjects: 'Proyek Unggulan',
       featuredSubtitle: 'Showcase karya terbaru saya.',
       viewAll: 'Lihat semua',
+      featured: 'Unggulan',
+      viewProject: 'Lihat Proyek',
+      quickStats: {
+        experience: 'Tahun Pengalaman',
+        projects: 'Proyek Selesai',
+        achievements: 'Sertifikat Diperoleh',
+        contributions: 'Kontribusi GitHub',
+      },
+      featuredProjectsList: [
+        {
+          id: 1,
+          name: 'Personal Portfolio',
+          description: 'Situs web personal & portofolio, dibangun dari awal menggunakan Next.js, TypeScript, Tailwind...',
+        },
+        {
+          id: 2,
+          name: 'Barasiah',
+          description: 'Marketplace jasa kebersihan on-demand dengan pelacakan real-time dan pembayaran aman.',
+        },
+      ],
     },
     // About Page
     about: {
@@ -200,6 +408,26 @@ export const translations = {
       hideDetails: 'Sembunyikan detail',
       keyAchievements: 'Pencapaian Utama',
       technologies: 'Teknologi:',
+      experiencesList: [
+        {
+          id: 1,
+          title: 'Full Stack Developer',
+          company: 'Howarts Studio',
+          location: 'Padang, Indonesia',
+          period: 'Des 2025 - Sekarang',
+          duration: 'Sedang Berjalan',
+          type: 'Full-time',
+          mode: 'Onsite',
+          description: 'Berkolaborasi dalam lingkungan studio untuk menghadirkan solusi digital dunia nyata. Terlibat dalam pengembangan Aplikasi Barasiah, Aplikasi Sumatrans, dan Aplikasi Bukuinduk.',
+          achievements: [
+            'Mengembangkan Aplikasi Barasiah - Platform marketplace jasa kebersihan dengan pemesanan dan pelacakan real-time',
+            'Membangun Aplikasi Sumatrans - Sistem manajemen transportasi terintegrasi untuk operator bus',
+            'Membuat Aplikasi Bukuinduk - Sistem manajemen catatan sekolah komprehensif untuk Dinas Pendidikan',
+            'Mengimplementasikan arsitektur terukur yang menangani 10.000+ pengguna aktif harian',
+            'Memimpin kolaborasi lintas fungsi antara tim desain, pengembangan, dan bisnis',
+          ],
+        },
+      ],
     },
     // Projects Page
     projects: {
@@ -227,6 +455,72 @@ export const translations = {
       showing: 'Menampilkan',
       of: 'dari',
       projectsLabel: 'proyek',
+      list: [
+        {
+          id: 1,
+          name: 'Barasiah App',
+          description: 'Marketplace jasa kebersihan on-demand yang menghubungkan pelanggan dengan pembersih profesional. Menyediakan fitur pemesanan real-time, pelacakan, dan pembayaran aman.',
+          platform: 'Mobile',
+          origin: 'Client',
+          role: 'Full Stack',
+        },
+        {
+          id: 2,
+          name: 'Sumatrans App',
+          description: 'Sistem manajemen transportasi terintegrasi untuk operator bus di Sumatera. Mengelola tiket, jadwal, dan armada bus.',
+          platform: 'Mobile',
+          origin: 'Client',
+          role: 'Full Stack',
+        },
+        {
+          id: 3,
+          name: 'BukuInduk App',
+          description: 'Sistem manajemen catatan sekolah komprehensif untuk Dinas Pendidikan Bukittinggi. Mengelola data siswa, nilai, dan catatan administratif.',
+          platform: 'Web',
+          origin: 'Client',
+          role: 'Frontend',
+        },
+        {
+          id: 4,
+          name: 'Personal Portfolio',
+          description: 'Situs web personal & portofolio modern yang dibangun dengan Next.js, TypeScript, dan Tailwind CSS. Memiliki fitur mode gelap, i18n, dan integrasi GitHub.',
+          platform: 'Web',
+          origin: 'Personal',
+          role: 'Full Stack',
+        },
+        {
+          id: 5,
+          name: 'IceBot Platform',
+          description: 'Platform pembelajaran berbasis proyek full-stack untuk kampus dengan dasbor mahasiswa & dosen, laboratorium SQL, umpan balik AI, dan manajemen proyek end-to-end.',
+          platform: 'Web',
+          origin: 'Client',
+          role: 'Backend',
+        },
+        {
+          id: 6,
+          name: 'PetaWaktu',
+          description: 'Aplikasi lini masa & kuis tergamifikasi untuk pembelajaran sejarah. Mengintegrasikan kuis interaktif, papan peringkat, dan lini masa dengan peran guru, siswa, dan admin.',
+          platform: 'Mobile',
+          origin: 'Personal',
+          role: 'Full Stack',
+        },
+        {
+          id: 7,
+          name: 'ChatApp',
+          description: 'Aplikasi obrolan real-time sederhana dengan alur autentikasi lengkap (OTP, pengaturan profil) dan percakapan 1-lawan-1 berbasis Firebase Auth & Firestore.',
+          platform: 'Mobile',
+          origin: 'Personal',
+          role: 'Full Stack',
+        },
+        {
+          id: 8,
+          name: 'Titipin',
+          description: 'Aplikasi titip beli & antar makanan/jajanan dengan dua peran utama (pengguna & pengantar), sistem penawaran ongkos kirim, penilaian, dan obrolan real-time per pesanan.',
+          platform: 'Mobile',
+          origin: 'Personal',
+          role: 'Full Stack',
+        },
+      ],
     },
     // Achievements Page
     achievements: {
@@ -239,6 +533,13 @@ export const translations = {
       noResults: 'Tidak ada sertifikat ditemukan',
       tryAdjusting: 'Coba sesuaikan pencarian atau filter Anda.',
       issuedOn: 'Diterbitkan pada',
+      comingSoon: 'Segera Hadir',
+      toBeAnnounced: 'Akan diumumkan',
+      list: [
+        { id: 1, title: 'Segera Hadir', issuer: 'Akan diumumkan' },
+        { id: 2, title: 'Segera Hadir', issuer: 'Akan diumumkan' },
+        { id: 3, title: 'Segera Hadir', issuer: 'Akan diumumkan' },
+      ],
     },
     // Dashboard Page
     dashboard: {
@@ -260,6 +561,17 @@ export const translations = {
       totalThisWeek: 'Total Minggu Ini',
       dailyActivity: 'Aktivitas Harian',
       languagesUsed: 'Bahasa yang Digunakan',
+      ago: 'hari yang lalu',
+      timeFormat: '{hours} jam {minutes} menit',
+      days: {
+        Mon: 'Sen',
+        Tue: 'Sel',
+        Wed: 'Rab',
+        Thu: 'Kam',
+        Fri: 'Jum',
+        Sat: 'Sab',
+        Sun: 'Min',
+      },
     },
     // Contact Page
     contact: {
@@ -282,6 +594,8 @@ export const translations = {
       message: 'Pesan',
       send: 'Kirim Pesan',
       goTo: 'Kunjungi',
+      successMsg: 'Pesan berhasil dikirim!',
+      errorMsg: 'Gagal mengirim pesan. Silakan coba lagi nanti.',
     },
     // Experience Page
     experience: {
@@ -289,6 +603,68 @@ export const translations = {
       subtitle: 'Perjalanan profesional dalam pengembangan mobile dan web',
       keyAchievements: 'Pencapaian Utama',
       technologies: 'Teknologi:',
+      educationTitle: 'Pendidikan',
+      skillsTitle: 'Keahlian Teknis',
+      ctaTitle: 'Tertarik untuk Bekerja Sama?',
+      ctaSubtitle: 'Mari diskusikan bagaimana saya dapat membantu mewujudkan proyek Anda',
+      ctaButton: 'Hubungi Saya',
+      experiencesList: [
+        {
+          id: 1,
+          title: 'Frontend Developer',
+          company: 'Dinas Pendidikan Bukittinggi',
+          period: '2025 - Sekarang',
+          location: 'Bukittinggi, Indonesia',
+          description: 'Mengembangkan dan memelihara sistem manajemen pendidikan komprehensif yang melayani beberapa sekolah. Mengimplementasikan antarmuka responsif dengan React dan Next.js, meningkatkan efisiensi administratif sebesar 40%. Berkolaborasi dengan tim backend untuk mengintegrasikan fitur-fitur kompleks termasuk manajemen informasi siswa, pelacakan nilai, dan portal komunikasi orang tua.',
+          achievements: [
+            'Mengurangi waktu muat halaman sebesar 35% melalui optimasi',
+            'Mengimplementasikan desain responsif yang mendukung 10.000+ pengguna aktif harian',
+            'Memimpin peningkatan UI/UX meningkatkan kepuasan pengguna sebesar 45%',
+            'Membimbing 2 developer junior',
+          ],
+        },
+        {
+          id: 2,
+          title: 'Mobile Engineer',
+          company: 'Aplikasi Barasiah',
+          period: '2025 - Sekarang',
+          location: 'Remote',
+          description: 'Membangun platform marketplace jasa kebersihan kaya fitur yang menghubungkan penyedia layanan dengan pelanggan. Mengembangkan aplikasi seluler menggunakan Flutter dan React Native dengan notifikasi real-time, pemrosesan pembayaran yang aman, dan kemampuan pelacakan layanan.',
+          achievements: [
+            'Mencapai peringkat toko aplikasi 4.8/5',
+            'Mengimplementasikan pelacakan waktu nyata dengan 500+ pengguna bersamaan',
+            'Mengintegrasikan pemrosesan pembayaran Stripe',
+            'Membangun solusi lintas platform mengurangi waktu pengembangan sebesar 40%',
+          ],
+        },
+      ],
+      educationList: [
+        {
+          degree: 'Sarjana Rekayasa Perangkat Lunak',
+          school: 'Universitas Negeri Padang',
+          year: '2021 - Present',
+          focus: 'Fokus pada Pengembangan Seluler & Sistem Backend',
+          details: 'Spesialisasi dalam membangun aplikasi seluler dan web yang terukur dengan penekanan pada pengalaman pengguna dan pengoptimalan kinerja.',
+        },
+      ],
+      skillsCategories: [
+        {
+          category: 'Pengembangan Seluler',
+          skills: ['Flutter', 'React Native', 'Dart', 'iOS/Android Development'],
+        },
+        {
+          category: 'Pengembangan Web',
+          skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
+        },
+        {
+          category: 'Pengembangan Backend',
+          skills: ['Node.js', 'PostgreSQL', 'Desain API', 'Optimasi Database'],
+        },
+        {
+          category: 'Alat & Layanan',
+          skills: ['Git', 'Supabase', 'Firebase', 'Integrasi Stripe'],
+        },
+      ],
     },
     // Common
     common: {
@@ -306,6 +682,8 @@ type DeepStringify<T> = T extends string
   ? string
   : T extends Record<string, unknown>
   ? { [K in keyof T]: DeepStringify<T[K]> }
+  : T extends Array<infer U>
+  ? Array<DeepStringify<U>>
   : T;
 
 export type TranslationKey = DeepStringify<typeof translations.en>;

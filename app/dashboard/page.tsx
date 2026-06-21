@@ -87,12 +87,14 @@ const mockWakaTimeData: WakaTimeData = {
 };
 
 function WakaTimeBarChart({ data }: { data: WakaTimeData }) {
+  const { t } = useLanguage();
   const maxHours = Math.max(...data.dailyActivity.map(d => d.hours));
 
   return (
     <div className="flex items-end justify-between h-40 gap-2">
       {data.dailyActivity.map((day, index) => {
         const heightPercent = (day.hours / maxHours) * 100;
+        const dayLabel = t.dashboard.days[day.day as keyof typeof t.dashboard.days] || day.day;
         return (
           <motion.div
             key={day.day}
@@ -105,7 +107,7 @@ function WakaTimeBarChart({ data }: { data: WakaTimeData }) {
               className="w-full bg-linear-to-t from-emerald-500 to-emerald-400 rounded-t-md min-h-1"
               style={{ height: `${heightPercent}%` }}
             />
-            <span className="text-xs text-gray-500">{day.day}</span>
+            <span className="text-xs text-gray-500">{dayLabel}</span>
           </motion.div>
         );
       })}
@@ -144,7 +146,7 @@ function LanguageBar({ languages }: { languages: WakaTimeData['languages'] }) {
 }
 
 export default function DashboardPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isLoading, setIsLoading] = useState(true);
   const [githubStats, setGithubStats] = useState({
     total: 0,
@@ -152,6 +154,25 @@ export default function DashboardPage() {
     best: 0,
     average: 0,
   });
+
+  const formatMockDate = (dateStr: string, isIndonesian: boolean) => {
+    try {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString(isIndonesian ? 'id-ID' : 'en-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    } catch {
+      return dateStr;
+    }
+  };
+
+  const formatMockTime = (hours: number, minutes: number) => {
+    return t.dashboard.timeFormat
+      .replace('{hours}', String(hours))
+      .replace('{minutes}', String(minutes));
+  };
 
   useEffect(() => {
     // Simulate loading
@@ -181,10 +202,10 @@ export default function DashboardPage() {
             </p>
           </div>
         </ScrollReveal>
-
+ 
         {/* Divider */}
         <div className="border-t border-dashed border-gray-200 my-8" />
-
+ 
         {/* GitHub Contributions Section */}
         <ScrollReveal delay={0.1}>
           <div className="mb-12">
@@ -203,7 +224,7 @@ export default function DashboardPage() {
               </a>
             </div>
             <p className="text-gray-500 text-sm mb-6">{t.dashboard.githubSubtitle}</p>
-
+ 
             {/* Stats Cards */}
             <StaggerContainer staggerDelay={0.1}>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -249,7 +270,7 @@ export default function DashboardPage() {
                 )}
               </div>
             </StaggerContainer>
-
+ 
             {/* GitHub Calendar */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -276,10 +297,10 @@ export default function DashboardPage() {
             </motion.div>
           </div>
         </ScrollReveal>
-
+ 
         {/* Divider */}
         <div className="border-t border-dashed border-gray-200 my-8" />
-
+ 
         {/* WakaTime Stats Section */}
         <ScrollReveal delay={0.2}>
           <div>
@@ -288,10 +309,10 @@ export default function DashboardPage() {
                 <Clock className="w-5 h-5 text-gray-700" />
                 <h2 className="text-xl font-bold text-gray-900">{t.dashboard.wakatimeStats}</h2>
               </div>
-              <span className="text-sm text-gray-400">{t.dashboard.lastUpdate}: 2 days ago</span>
+              <span className="text-sm text-gray-400">{t.dashboard.lastUpdate}: 2 {t.dashboard.ago}</span>
             </div>
             <p className="text-gray-500 text-sm mb-6">{t.dashboard.wakatimeSubtitle}</p>
-
+ 
             {/* WakaTime Info Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               <motion.div
@@ -302,7 +323,7 @@ export default function DashboardPage() {
                   <Calendar className="w-4 h-4 text-gray-400" />
                   <p className="text-sm text-gray-500">{t.dashboard.startDate}</p>
                 </div>
-                <p className="font-semibold text-gray-900">{mockWakaTimeData.startDate}</p>
+                <p className="font-semibold text-gray-900">{formatMockDate('2026-01-17', language === 'id')}</p>
               </motion.div>
               <motion.div
                 whileHover={{ y: -2 }}
@@ -312,7 +333,7 @@ export default function DashboardPage() {
                   <Calendar className="w-4 h-4 text-gray-400" />
                   <p className="text-sm text-gray-500">{t.dashboard.endDate}</p>
                 </div>
-                <p className="font-semibold text-gray-900">{mockWakaTimeData.endDate}</p>
+                <p className="font-semibold text-gray-900">{formatMockDate('2026-01-23', language === 'id')}</p>
               </motion.div>
               <motion.div
                 whileHover={{ y: -2 }}
@@ -322,7 +343,7 @@ export default function DashboardPage() {
                   <Timer className="w-4 h-4 text-gray-400" />
                   <p className="text-sm text-gray-500">{t.dashboard.avgDailyCoding}</p>
                 </div>
-                <p className="font-semibold text-gray-900">{mockWakaTimeData.averageDailyTime}</p>
+                <p className="font-semibold text-gray-900">{formatMockTime(1, 34)}</p>
               </motion.div>
               <motion.div
                 whileHover={{ y: -2 }}
@@ -332,10 +353,10 @@ export default function DashboardPage() {
                   <Clock className="w-4 h-4 text-gray-400" />
                   <p className="text-sm text-gray-500">{t.dashboard.totalThisWeek}</p>
                 </div>
-                <p className="font-semibold text-gray-900">{mockWakaTimeData.totalTime}</p>
+                <p className="font-semibold text-gray-900">{formatMockTime(7, 51)}</p>
               </motion.div>
             </div>
-
+ 
             {/* Charts Grid */}
             <div className="grid md:grid-cols-2 gap-6">
               {/* Daily Activity Bar Chart */}
@@ -351,7 +372,7 @@ export default function DashboardPage() {
                 </div>
                 <WakaTimeBarChart data={mockWakaTimeData} />
               </motion.div>
-
+ 
               {/* Languages Bar */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

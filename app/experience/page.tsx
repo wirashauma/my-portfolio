@@ -10,6 +10,7 @@ import { useLanguage } from '../contexts/LanguageContext';
  * Navigation Component
  */
 function Navigation() {
+  const { t } = useLanguage();
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
@@ -20,19 +21,19 @@ function Navigation() {
 
         <div className="hidden md:flex items-center gap-8">
           <Link href="/" className="text-gray-700 hover:text-emerald-600 font-medium transition">
-            Home
+            {t.nav.home}
           </Link>
           <Link
             href="/experience"
             className="text-emerald-600 font-bold transition hover:text-emerald-700"
           >
-            Experience
+            {t.nav.about}
           </Link>
           <Link
             href="/projects"
             className="text-gray-700 hover:text-emerald-600 font-medium transition"
           >
-            Projects
+            {t.nav.projects}
           </Link>
         </div>
       </div>
@@ -46,42 +47,13 @@ function Navigation() {
 function ExperienceSection() {
   const { t } = useLanguage();
   
-  const experiences = [
-    {
-      id: 1,
-      title: 'Frontend Developer',
-      company: 'Dinas Pendidikan Bukittinggi',
-      period: '2025 - Present',
-      location: 'Bukittinggi, Indonesia',
-      description:
-        'Developed and maintained a comprehensive education management system serving multiple schools. Implemented responsive interfaces with React and Next.js, improving administrative efficiency by 40%. Collaborated with backend team to integrate complex features including student information management, grade tracking, and parent communication portals.',
-      technologies: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'TypeScript'],
-      achievements: [
-        'Reduced page load time by 35% through optimization',
-        'Implemented responsive design supporting 10,000+ daily active users',
-        'Led UI/UX improvements increasing user satisfaction by 45%',
-        'Mentored 2 junior developers',
-      ],
-      color: 'emerald',
-    },
-    {
-      id: 2,
-      title: 'Mobile Engineer',
-      company: 'Barasiah App',
-      period: '2025 - Present',
-      location: 'Remote',
-      description:
-        'Built a feature-rich cleaning service marketplace platform connecting service providers with customers. Developed mobile applications using Flutter and React Native with real-time notifications, secure payment processing, and service tracking capabilities.',
-      technologies: ['Flutter', 'React Native', 'Supabase', 'Node.js', 'Dart', 'TypeScript'],
-      achievements: [
-        'Achieved 4.8/5 app store rating',
-        'Implemented real-time tracking with 500+ concurrent users',
-        'Integrated Stripe payment processing',
-        'Built cross-platform solution reducing development time by 40%',
-      ],
-      color: 'blue',
-    },
-  ];
+  const experiences = t.experience.experiencesList.map((exp) => ({
+    ...exp,
+    technologies: exp.id === 1
+      ? ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'TypeScript']
+      : ['Flutter', 'React Native', 'Supabase', 'Node.js', 'Dart', 'TypeScript'],
+    color: exp.id === 1 ? 'emerald' : 'blue',
+  }));
 
   return (
     <section className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-white pt-32">
@@ -173,22 +145,14 @@ function ExperienceSection() {
  * Education Section
  */
 function EducationSection() {
-  const education = [
-    {
-      degree: 'Bachelor of Software Engineering',
-      school: 'Universitas Negeri Padang',
-      year: '2021 - Present',
-      focus: 'Focus on Mobile Development & Backend Systems',
-      details:
-        'Specialized in building scalable mobile and web applications with emphasis on user experience and performance optimization.',
-    },
-  ];
+  const { t } = useLanguage();
+  const education = t.experience.educationList;
 
   return (
     <section className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-4xl mx-auto">
         <ScrollReveal>
-          <h2 className="text-4xl font-bold text-gray-900 mb-16 text-center">Education</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-16 text-center">{t.experience.educationTitle}</h2>
         </ScrollReveal>
 
         <div className="grid gap-6">
@@ -224,30 +188,14 @@ function EducationSection() {
  * Skills Summary Section
  */
 function SkillsSummarySection() {
-  const skillCategories = [
-    {
-      category: 'Mobile Development',
-      skills: ['Flutter', 'React Native', 'Dart', 'iOS/Android Development'],
-    },
-    {
-      category: 'Web Development',
-      skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
-    },
-    {
-      category: 'Backend Development',
-      skills: ['Node.js', 'PostgreSQL', 'API Design', 'Database Optimization'],
-    },
-    {
-      category: 'Tools & Services',
-      skills: ['Git', 'Supabase', 'Firebase', 'Stripe Integration'],
-    },
-  ];
+  const { t } = useLanguage();
+  const skillCategories = t.experience.skillsCategories;
 
   return (
     <section className="w-full py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-4xl mx-auto">
         <ScrollReveal>
-          <h2 className="text-4xl font-bold text-gray-900 mb-16 text-center">Technical Skills</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-16 text-center">{t.experience.skillsTitle}</h2>
         </ScrollReveal>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -284,21 +232,22 @@ function SkillsSummarySection() {
  * CTA Section
  */
 function CTASection() {
+  const { t } = useLanguage();
   return (
     <section className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-gray-900">
       <div className="max-w-4xl mx-auto text-center">
         <ScrollReveal>
-          <h2 className="text-3xl font-bold text-white mb-6">Interested in Working Together?</h2>
+          <h2 className="text-3xl font-bold text-white mb-6">{t.experience.ctaTitle}</h2>
           <p className="text-gray-300 mb-8">
-            Let&apos;s discuss how I can help bring your project to life
+            {t.experience.ctaSubtitle}
           </p>
 
           <motion.a
-            href="#"
+            href="/contact"
             whileHover={{ scale: 1.05 }}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition cursor-pointer"
           >
-            Get in Touch <ArrowRight className="w-5 h-5" />
+            {t.experience.ctaButton} <ArrowRight className="w-5 h-5" />
           </motion.a>
         </ScrollReveal>
       </div>

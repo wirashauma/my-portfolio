@@ -62,78 +62,47 @@ interface Project {
   github?: string;
 }
 
-const projects: Project[] = [
-  // Client Projects (Howarts Studio)
+const staticProjectsInfo = [
   {
     id: 1,
-    name: 'Barasiah App',
-    description: 'On-demand cleaning service marketplace connecting customers with professional cleaners. Features real-time booking, tracking, and secure payments.',
     technologies: ['Flutter', 'Node.js', 'Supabase', 'PostgreSQL'],
     image: '/projects/barasiah.png',
-    platform: 'Mobile',
-    origin: 'Client',
-    role: 'Full Stack',
     startDate: '2025-12-13',
     endDate: '2026-01-25',
     link: '/projects/barasiah',
   },
   {
     id: 2,
-    name: 'Sumatrans App',
-    description: 'Integrated transportation management system for bus operators in Sumatera. Handles ticketing, scheduling, and fleet management.',
     technologies: ['Flutter', 'Kotlin', 'Node.js', 'PostgreSQL'],
     image: '/projects/sumatrans.png',
-    platform: 'Mobile',
-    origin: 'Client',
-    role: 'Full Stack',
     startDate: '2025-12-18',
     endDate: '2025-12-19',
   },
   {
     id: 3,
-    name: 'BukuInduk App',
-    description: 'Comprehensive school record management system for Dinas Pendidikan Bukittinggi. Manages student data, grades, and administrative records.',
     technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'Tailwind CSS'],
     image: '/projects/bukuinduk.png',
-    platform: 'Web',
-    origin: 'Client',
-    role: 'Frontend',
     startDate: '2026-01-02',
     endDate: '2026-01-27',
   },
-  // Personal Projects
   {
     id: 4,
-    name: 'Personal Portfolio',
-    description: 'Modern personal website & portfolio built with Next.js, TypeScript, and Tailwind CSS. Features dark mode, i18n, and GitHub integration.',
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
     image: '/projects/portfolio.png',
-    platform: 'Web',
-    origin: 'Personal',
-    role: 'Full Stack',
     endDate: '2024-12-01',
     link: 'https://wirashauma.dev',
     github: 'https://github.com/wirashauma/my-portfolio',
   },
   {
     id: 5,
-    name: 'IceBot Platform',
-    description:
-      'Full-stack project-based learning platform for campus with dashboard mahasiswa & dosen, SQL lab, AI feedback, dan manajemen project end-to-end.',
     technologies: ['Next.js', 'Tailwind CSS', 'Node.js', 'Prisma', 'PostgreSQL', 'Socket.IO'],
     image: '/projects/icebot/cover.png',
-    platform: 'Web',
-    origin: 'Client',
-    role: 'Backend',
     startDate: '2026-01-20',
     endDate: '2026-03-15',
     link: '/projects/icebot',
   },
   {
     id: 6,
-    name: 'PetaWaktu',
-    description:
-      'Gamified timeline & quiz app untuk belajar sejarah. Menggabungkan kuis interaktif, leaderboard, dan peta waktu dengan role guru, siswa, dan admin.',
     technologies: [
       'Flutter',
       'Dart',
@@ -143,18 +112,12 @@ const projects: Project[] = [
       'Cloudinary',
     ],
     image: '/projects/petawaktu.png',
-    platform: 'Mobile',
-    origin: 'Personal',
-    role: 'Full Stack',
     startDate: '2025-11-24',
     endDate: '2025-12-23',
     link: '/projects/petawaktu',
   },
   {
     id: 7,
-    name: 'ChatApp',
-    description:
-      'Simple real-time chat app dengan alur auth lengkap (OTP, setup profil) dan percakapan 1-1 berbasis Firebase Auth & Firestore.',
     technologies: [
       'Flutter',
       'Dart',
@@ -164,18 +127,12 @@ const projects: Project[] = [
       'image_picker',
     ],
     image: '/projects/chatapp.png',
-    platform: 'Mobile',
-    origin: 'Personal',
-    role: 'Full Stack',
     startDate: '2025-11-11',
     endDate: '2025-12-14',
     link: '/projects/chatapp',
   },
   {
     id: 8,
-    name: 'Titipin',
-    description:
-      'Titip beli & antar makanan/jajanan dengan dua role utama (user & deliverer), sistem penawaran ongkir, rating, dan chat realtime per pesanan.',
     technologies: [
       'Flutter',
       'Dart',
@@ -185,9 +142,6 @@ const projects: Project[] = [
       'intl',
     ],
     image: '/projects/titipin.png',
-    platform: 'Mobile',
-    origin: 'Personal',
-    role: 'Full Stack',
     startDate: '2025-10-01',
     endDate: '2025-12-12',
     link: '/projects/titipin',
@@ -250,10 +204,10 @@ function ProjectCard({ project }: { project: Project }) {
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-1">
           <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${platformColors[project.platform]}`}>
-            {project.platform}
+            {project.platform === 'Mobile' ? t.projects.mobile : t.projects.web}
           </span>
           <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${originColors[project.origin]}`}>
-            {project.origin}
+            {project.origin === 'Client' ? t.projects.client : t.projects.personal}
           </span>
         </div>
         {/* Hover Overlay */}
@@ -279,7 +233,7 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="flex items-start justify-between gap-2 mb-2">
           <h3 className="text-lg font-bold text-emerald-600">{project.name}</h3>
           <span className={`px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap ${roleColors[project.role]}`}>
-            {project.role}
+            {project.role === 'Frontend' ? t.projects.frontend : project.role === 'Backend' ? t.projects.backend : t.projects.fullStack}
           </span>
         </div>
         {renderDateRange() && (
@@ -334,6 +288,33 @@ export default function ProjectsPage() {
   const [originFilter, setOriginFilter] = useState<Origin | 'all'>('all');
   const [roleFilter, setRoleFilter] = useState<Role | 'all'>('all');
 
+  const projects = useMemo(() => {
+    return t.projects.list.map((proj) => {
+      const staticProj = staticProjectsInfo.find((p) => p.id === proj.id) || {
+        technologies: [],
+        image: '',
+        startDate: '',
+        endDate: '',
+        link: undefined,
+        github: undefined,
+      };
+      return {
+        id: proj.id,
+        name: proj.name,
+        description: proj.description,
+        platform: proj.platform as Platform,
+        origin: proj.origin as Origin,
+        role: proj.role as Role,
+        technologies: staticProj.technologies,
+        image: staticProj.image,
+        startDate: staticProj.startDate,
+        endDate: staticProj.endDate,
+        link: staticProj.link,
+        github: staticProj.github,
+      };
+    });
+  }, [t]);
+
   const filteredProjects = useMemo(() => {
     const result = projects.filter((project) => {
       // Search filter
@@ -361,7 +342,7 @@ export default function ProjectsPage() {
       const bTime = new Date(a.endDate ?? a.startDate ?? 0).getTime();
       return aTime - bTime;
     });
-  }, [searchQuery, platformFilter, originFilter, roleFilter]);
+  }, [projects, searchQuery, platformFilter, originFilter, roleFilter]);
 
   const clearFilters = () => {
     setSearchQuery('');

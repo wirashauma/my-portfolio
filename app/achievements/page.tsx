@@ -17,34 +17,6 @@ interface Certificate {
   image?: string;
 }
 
-// Dummy achievements data - 3 empty cards
-const achievements: Certificate[] = [
-  { 
-    id: 1, 
-    title: 'Coming Soon', 
-    issuer: 'To be announced', 
-    date: '-', 
-    type: 'Professional', 
-    category: 'General',
-  },
-  { 
-    id: 2, 
-    title: 'Coming Soon', 
-    issuer: 'To be announced', 
-    date: '-', 
-    type: 'Course', 
-    category: 'Mobile',
-  },
-  { 
-    id: 3, 
-    title: 'Coming Soon', 
-    issuer: 'To be announced', 
-    date: '-', 
-    type: 'Professional', 
-    category: 'Web',
-  },
-];
-
 const typeColors: Record<string, string> = {
   Course: 'bg-blue-100 text-blue-700',
   Internship: 'bg-purple-100 text-purple-700',
@@ -113,10 +85,21 @@ function CertificateCard({ cert }: { cert: Certificate }) {
 }
 
 export default function AchievementsPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
+
+  const achievements = useMemo(() => {
+    return t.achievements.list.map((cert) => ({
+      id: cert.id,
+      title: cert.title,
+      issuer: cert.issuer,
+      date: '-',
+      type: (cert.id === 2 ? 'Course' : 'Professional') as 'Course' | 'Internship' | 'Professional' | 'Competition' | 'Workshop',
+      category: (cert.id === 1 ? 'General' : cert.id === 2 ? 'Mobile' : 'Web') as 'Mobile' | 'Web' | 'Backend' | 'Cloud' | 'AI/ML' | 'General' | 'Freelance',
+    }));
+  }, [t]);
 
   const filteredAchievements = useMemo(() => {
     return achievements.filter((cert) => {
@@ -127,7 +110,7 @@ export default function AchievementsPage() {
       const matchesCategory = categoryFilter === 'all' || cert.category === categoryFilter;
       return matchesSearch && matchesType && matchesCategory;
     });
-  }, [searchQuery, typeFilter, categoryFilter]);
+  }, [achievements, searchQuery, typeFilter, categoryFilter]);
 
   const clearFilters = () => {
     setSearchQuery('');
@@ -168,79 +151,79 @@ export default function AchievementsPage() {
               />
             </div>
 
-            {/* Filter Buttons */}
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-2 text-gray-500">
-                <Filter className="w-4 h-4" />
-                <span className="text-sm font-medium">Filters:</span>
-              </div>
+              {/* Filter Buttons */}
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2 text-gray-500">
+                  <Filter className="w-4 h-4" />
+                  <span className="text-sm font-medium">{t.projects.filters}</span>
+                </div>
 
-              {/* Type Filter */}
-              <select
-                value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value)}
-                className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              >
-                <option value="all">{t.achievements.filterByType}</option>
-                <option value="Course">Course</option>
-                <option value="Professional">Professional</option>
-                <option value="Internship">Internship</option>
-                <option value="Competition">Competition</option>
-                <option value="Workshop">Workshop</option>
-              </select>
-
-              {/* Category Filter */}
-              <select
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              >
-                <option value="all">{t.achievements.filterByCategory}</option>
-                <option value="Mobile">Mobile</option>
-                <option value="Web">Web</option>
-                <option value="Backend">Backend</option>
-                <option value="Cloud">Cloud</option>
-                <option value="AI/ML">AI/ML</option>
-                <option value="General">General</option>
-                <option value="Freelance">Freelance</option>
-              </select>
-
-              {/* Clear Filters */}
-              {hasActiveFilters && (
-                <button
-                  onClick={clearFilters}
-                  className="px-3 py-2 text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+                {/* Type Filter */}
+                <select
+                  value={typeFilter}
+                  onChange={(e) => setTypeFilter(e.target.value)}
+                  className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 >
-                  Clear all
-                </button>
-              )}
-            </div>
-          </div>
-        </ScrollReveal>
+                  <option value="all">{t.achievements.filterByType}</option>
+                  <option value="Course">{language === 'id' ? 'Kursus' : 'Course'}</option>
+                  <option value="Professional">{language === 'id' ? 'Profesional' : 'Professional'}</option>
+                  <option value="Internship">{language === 'id' ? 'Magang' : 'Internship'}</option>
+                  <option value="Competition">{language === 'id' ? 'Kompetisi' : 'Competition'}</option>
+                  <option value="Workshop">{language === 'id' ? 'Workshop' : 'Workshop'}</option>
+                </select>
 
-        {/* Total Count */}
-        <ScrollReveal delay={0.1}>
-          <p className="text-gray-500 mb-6">
-            {t.achievements.total}: <span className="font-semibold text-gray-900">{filteredAchievements.length}</span>
-          </p>
-        </ScrollReveal>
+                {/* Category Filter */}
+                <select
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                >
+                  <option value="all">{t.achievements.filterByCategory}</option>
+                  <option value="Mobile">{language === 'id' ? 'Seluler' : 'Mobile'}</option>
+                  <option value="Web">Web</option>
+                  <option value="Backend">Backend</option>
+                  <option value="Cloud">Cloud</option>
+                  <option value="AI/ML">AI/ML</option>
+                  <option value="General">{language === 'id' ? 'Umum' : 'General'}</option>
+                  <option value="Freelance">Freelance</option>
+                </select>
 
-        {/* No Results */}
-        {filteredAchievements.length === 0 && (
-          <div className="text-center py-16">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-              <Search className="w-8 h-8 text-gray-400" />
+                {/* Clear Filters */}
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearFilters}
+                    className="px-3 py-2 text-sm text-emerald-600 hover:text-emerald-700 font-medium cursor-pointer"
+                  >
+                    {t.projects.clearAll}
+                  </button>
+                )}
+              </div>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">{t.achievements.noResults}</h3>
-            <p className="text-gray-600 mb-4">{t.achievements.tryAdjusting}</p>
-            <button
-              onClick={clearFilters}
-              className="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
-            >
-              Clear all filters
-            </button>
-          </div>
-        )}
+          </ScrollReveal>
+
+          {/* Total Count */}
+          <ScrollReveal delay={0.1}>
+            <p className="text-gray-500 mb-6">
+              {t.achievements.total}: <span className="font-semibold text-gray-900">{filteredAchievements.length}</span>
+            </p>
+          </ScrollReveal>
+
+          {/* No Results */}
+          {filteredAchievements.length === 0 && (
+            <div className="text-center py-16">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                <Search className="w-8 h-8 text-gray-400" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{t.achievements.noResults}</h3>
+              <p className="text-gray-600 mb-4">{t.achievements.tryAdjusting}</p>
+              <button
+                onClick={clearFilters}
+                className="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors cursor-pointer"
+              >
+                {t.projects.clearAllFilters}
+              </button>
+            </div>
+          )}
 
         {/* Certificates Grid */}
         {filteredAchievements.length > 0 && (

@@ -169,8 +169,8 @@ function FeaturedProjectsSection() {
   const featuredProjects = [
     {
       id: 1,
-      name: 'Personal Portfolio',
-      description: 'Personal website & portfolio, built from scratch using Next.js, TypeScript, Tailwind...',
+      name: t.home.featuredProjectsList[0].name,
+      description: t.home.featuredProjectsList[0].description,
       technologies: ['TypeScript', 'Tailwind', 'React', 'Next.js', 'Supabase'],
       image: '/projects/portfolio.png',
       featured: true,
@@ -178,8 +178,8 @@ function FeaturedProjectsSection() {
     },
     {
       id: 2,
-      name: 'Barasiah',
-      description: 'On-demand cleaning service marketplace with real-time tracking and secure payments.',
+      name: t.home.featuredProjectsList[1].name,
+      description: t.home.featuredProjectsList[1].description,
       technologies: ['Kotlin', 'Android'],
       image: '/projects/barasiah.png',
       featured: true,
@@ -226,7 +226,7 @@ function FeaturedProjectsSection() {
                     />
                     {project.featured && (
                       <span className="absolute top-3 right-3 px-2 py-1 bg-red-500 text-white text-xs font-semibold rounded-md flex items-center gap-1">
-                        📌 Featured
+                        📌 {t.home.featured}
                       </span>
                     )}
                     {/* Hover Overlay */}
@@ -239,7 +239,7 @@ function FeaturedProjectsSection() {
                         href="/projects"
                         className="flex items-center gap-2 text-white font-medium hover:underline"
                       >
-                        View Project <ArrowRight className="w-4 h-4" />
+                        {t.home.viewProject} <ArrowRight className="w-4 h-4" />
                       </Link>
                     </motion.div>
                   </div>
@@ -273,11 +273,12 @@ function FeaturedProjectsSection() {
  * Quick Stats Section
  */
 function QuickStatsSection() {
+  const { t } = useLanguage();
   const stats = [
-    { label: 'Years Experience', value: '3+' },
-    { label: 'Projects Completed', value: '20+' },
-    { label: 'Certificates Earned', value: '56+' },
-    { label: 'GitHub Contributions', value: '599+' },
+    { label: t.home.quickStats.experience, value: '3+' },
+    { label: t.home.quickStats.projects, value: '20+' },
+    { label: t.home.quickStats.achievements, value: '56+' },
+    { label: t.home.quickStats.contributions, value: '599+' },
   ];
 
   return (

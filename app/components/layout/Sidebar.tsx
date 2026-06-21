@@ -14,8 +14,11 @@ import {
   Menu,
   X,
   CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useSidebar } from '../../contexts/SidebarContext';
 
 type NavKey = 'home' | 'about' | 'achievements' | 'projects' | 'dashboard' | 'contact';
 
@@ -44,29 +47,32 @@ interface SidebarContentProps {
  */
 function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
   const { language, toggleLanguage, t } = useLanguage();
+  const { isCollapsed } = useSidebar();
 
   return (
-    <div className="flex flex-col h-full bg-(--sidebar-bg)">
+    <div className="flex flex-col h-full bg-(--sidebar-bg) relative">
       {/* Profile Section */}
-      <div className="p-6 text-center border-b border-(--sidebar-border)">
+      <div className={`p-4 text-center border-b border-(--sidebar-border) transition-all duration-300 ${isCollapsed ? 'py-6' : 'p-6'}`}>
         {/* Profile Image */}
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="relative w-24 h-24 mx-auto mb-4"
+          animate={{ 
+            width: isCollapsed ? 44 : 96, 
+            height: isCollapsed ? 44 : 96 
+          }}
+          transition={{ duration: 0.3 }}
+          className="relative mx-auto mb-3"
         >
-          <div className="w-full h-full rounded-full bg-linear-to-br from-emerald-400 to-emerald-600 p-1">
+          <div className="w-full h-full rounded-full bg-linear-to-br from-emerald-400 to-emerald-600 p-0.5">
             <div className="w-full h-full rounded-full bg-(--card-bg) overflow-hidden flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/profile.jpeg"
                 alt="Wira Shauma Ardhana"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover animate-fade-in"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
-                  target.parentElement!.innerHTML = `<span class="text-3xl font-bold text-emerald-600">WS</span>`;
+                  target.parentElement!.innerHTML = `<span class="${isCollapsed ? 'text-sm' : 'text-3xl'} font-bold text-emerald-600">WS</span>`;
                 }}
               />
             </div>
@@ -74,59 +80,53 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
         </motion.div>
 
         {/* Name with Verified Badge */}
-        <motion.div
-          initial={{ y: 10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="flex items-center justify-center gap-1.5"
-        >
-          <h2 className="text-lg font-bold text-(--text-primary)">{t.sidebar.name}</h2>
-          <CheckCircle2 className="w-5 h-5 text-blue-500 fill-blue-500" />
-        </motion.div>
+        {!isCollapsed && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="flex items-center justify-center gap-1.5 mt-2">
+              <h2 className="text-lg font-bold text-(--text-primary) whitespace-nowrap">{t.sidebar.name}</h2>
+              <CheckCircle2 className="w-5 h-5 text-blue-500 fill-blue-500 shrink-0" />
+            </div>
 
-        <motion.p
-          initial={{ y: 10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-          className="text-sm text-(--text-muted) mt-1"
-        >
-          @wirashauma
-        </motion.p>
+            <p className="text-sm text-(--text-muted) mt-1">
+              @wirashauma
+            </p>
 
-        {/* Language Switcher */}
-        <motion.div
-          initial={{ y: 10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.4 }}
-          className="flex items-center justify-center mt-4"
-        >
-          <div className="flex items-center bg-(--hover-bg) rounded-full p-1">
-            <button
-              onClick={toggleLanguage}
-              className={`px-3 py-1 text-xs font-semibold rounded-full transition-all ${
-                language === 'en'
-                  ? 'bg-emerald-500 text-white'
-                  : 'text-(--text-secondary) hover:bg-(--card-bg)'
-              }`}
-            >
-              EN
-            </button>
-            <button
-              onClick={toggleLanguage}
-              className={`px-3 py-1 text-xs font-semibold rounded-full transition-all ${
-                language === 'id'
-                  ? 'bg-emerald-500 text-white'
-                  : 'text-(--text-secondary) hover:bg-(--card-bg)'
-              }`}
-            >
-              ID
-            </button>
-          </div>
-        </motion.div>
+            {/* Language Switcher */}
+            <div className="flex items-center justify-center mt-4">
+              <div className="flex items-center bg-(--hover-bg) rounded-full p-1">
+                <button
+                  onClick={toggleLanguage}
+                  className={`px-3 py-1 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                    language === 'en'
+                      ? 'bg-emerald-500 text-white shadow-xs'
+                      : 'text-(--text-secondary) hover:bg-(--card-bg)'
+                  }`}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={toggleLanguage}
+                  className={`px-3 py-1 text-xs font-semibold rounded-full transition-all cursor-pointer ${
+                    language === 'id'
+                      ? 'bg-emerald-500 text-white shadow-xs'
+                      : 'text-(--text-secondary) hover:bg-(--card-bg)'
+                  }`}
+                >
+                  ID
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
 
       {/* Navigation Items */}
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+      <nav className={`flex-1 p-3 space-y-1.5 overflow-y-auto ${isCollapsed ? 'flex flex-col items-center' : ''}`}>
         {navItems.map((item, index) => {
           const isActive = pathname === item.href;
           return (
@@ -134,26 +134,38 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
               key={item.key}
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.1 * index, duration: 0.4 }}
+              transition={{ delay: 0.05 * index, duration: 0.3 }}
+              className={`w-full relative group ${isCollapsed ? 'flex justify-center' : ''}`}
             >
               <Link
                 href={item.href}
                 onClick={onNavClick}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all group ${
+                className={`flex items-center ${
+                  isCollapsed ? 'justify-center p-3 w-11 h-11' : 'gap-3 px-4 py-3 w-full'
+                } rounded-xl font-medium transition-all ${
                   isActive
                     ? 'bg-emerald-500/10 text-emerald-500 border-l-4 border-emerald-500'
                     : 'text-(--text-secondary) hover:bg-(--hover-bg) hover:text-emerald-500'
                 }`}
               >
                 <span
-                  className={`transition-colors ${
+                  className={`transition-colors shrink-0 ${
                     isActive ? 'text-emerald-500' : 'text-(--text-muted) group-hover:text-emerald-500'
                   }`}
                 >
                   {item.icon}
                 </span>
-                <span>{t.nav[item.key]}</span>
-                {isActive && (
+                
+                {!isCollapsed && <span>{t.nav[item.key]}</span>}
+
+                {/* Premium Hover Tooltip in Collapsed State */}
+                {isCollapsed && (
+                  <div className="absolute left-16 bg-gray-900/95 text-white text-xs font-semibold px-3 py-2 rounded-lg opacity-0 translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap shadow-lg z-50">
+                    {t.nav[item.key]}
+                  </div>
+                )}
+
+                {isActive && !isCollapsed && (
                   <motion.span
                     layoutId="activeIndicator"
                     className="ml-auto"
@@ -170,13 +182,21 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-(--sidebar-border)">
-        <p className="text-xs text-center text-(--text-muted)">
-          {t.sidebar.copyright} © {new Date().getFullYear()}
-        </p>
-        <p className="text-xs text-center text-(--text-muted) mt-1">
-          Wira Shauma. {t.sidebar.allRightsReserved}
-        </p>
+      <div className="p-4 border-t border-(--sidebar-border) transition-all duration-300">
+        {isCollapsed ? (
+          <div className="text-center text-xs font-bold text-emerald-600 bg-emerald-500/10 rounded-lg py-2">
+            WS
+          </div>
+        ) : (
+          <>
+            <p className="text-xs text-center text-(--text-muted)">
+              {t.sidebar.copyright} © {new Date().getFullYear()}
+            </p>
+            <p className="text-xs text-center text-(--text-muted) mt-1">
+              Wira Shauma. {t.sidebar.allRightsReserved}
+            </p>
+          </>
+        )}
       </div>
     </div>
   );
@@ -190,6 +210,7 @@ function SidebarContent({ pathname, onNavClick }: SidebarContentProps) {
 export function Sidebar() {
   const pathname = usePathname();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { isCollapsed, toggleCollapse } = useSidebar();
 
   const sidebarVariants = {
     hidden: { x: -280 },
@@ -215,8 +236,21 @@ export function Sidebar() {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-64 bg-(--sidebar-bg) border-r border-(--sidebar-border) flex-col z-40">
+      <aside className={`hidden lg:flex fixed left-0 top-0 bottom-0 transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'} bg-(--sidebar-bg) border-r border-(--sidebar-border) flex-col z-40`}>
         <SidebarContent pathname={pathname} onNavClick={handleNavClick} />
+        
+        {/* Toggle Collapse Button - Desktop Only */}
+        <button
+          onClick={toggleCollapse}
+          className="hidden lg:flex absolute -right-3 top-10 w-6 h-6 rounded-full bg-white border border-(--sidebar-border) shadow-md items-center justify-center cursor-pointer text-gray-500 hover:text-emerald-500 transition-all z-50 hover:scale-110"
+          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          {isCollapsed ? (
+            <ChevronRight className="w-3.5 h-3.5" />
+          ) : (
+            <ChevronLeft className="w-3.5 h-3.5" />
+          )}
+        </button>
       </aside>
 
       {/* Mobile Header */}
