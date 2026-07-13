@@ -53,6 +53,48 @@ function StatCardSkeleton() {
   );
 }
 
+function WakaTimeCardSkeleton() {
+  return (
+    <div className="bg-white rounded-xl border border-gray-200 p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <Skeleton width="w-4" height="h-4" className="rounded-full" />
+        <Skeleton width="w-20" height="h-4" />
+      </div>
+      <Skeleton width="w-24" height="h-6" />
+    </div>
+  );
+}
+
+function WakaTimeBarChartSkeleton() {
+  const heights = ['h-12', 'h-24', 'h-16', 'h-32', 'h-8', 'h-20', 'h-14'];
+  return (
+    <div className="flex items-end justify-between h-40 gap-2">
+      {heights.map((h, i) => (
+        <div key={i} className="flex-1 flex flex-col items-center gap-2 w-full">
+          <Skeleton width="w-full" height={h} className="rounded-t-md" />
+          <Skeleton width="w-8" height="h-3" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function LanguageBarSkeleton() {
+  return (
+    <div className="space-y-4">
+      {[1, 2, 3, 4, 5].map((_, i) => (
+        <div key={i} className="space-y-2">
+          <div className="flex justify-between">
+            <Skeleton width="w-20" height="h-4" />
+            <Skeleton width="w-8" height="h-4" />
+          </div>
+          <Skeleton width="w-full" height="h-2" className="rounded-full" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // WakaTime mock data
 interface WakaTimeData {
   startDate: string;
@@ -315,46 +357,57 @@ export default function DashboardPage() {
  
             {/* WakaTime Info Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <motion.div
-                whileHover={{ y: -2 }}
-                className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="w-4 h-4 text-gray-400" />
-                  <p className="text-sm text-gray-500">{t.dashboard.startDate}</p>
-                </div>
-                <p className="font-semibold text-gray-900">{formatMockDate('2026-01-17', language === 'id')}</p>
-              </motion.div>
-              <motion.div
-                whileHover={{ y: -2 }}
-                className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="w-4 h-4 text-gray-400" />
-                  <p className="text-sm text-gray-500">{t.dashboard.endDate}</p>
-                </div>
-                <p className="font-semibold text-gray-900">{formatMockDate('2026-01-23', language === 'id')}</p>
-              </motion.div>
-              <motion.div
-                whileHover={{ y: -2 }}
-                className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <Timer className="w-4 h-4 text-gray-400" />
-                  <p className="text-sm text-gray-500">{t.dashboard.avgDailyCoding}</p>
-                </div>
-                <p className="font-semibold text-gray-900">{formatMockTime(1, 34)}</p>
-              </motion.div>
-              <motion.div
-                whileHover={{ y: -2 }}
-                className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <Clock className="w-4 h-4 text-gray-400" />
-                  <p className="text-sm text-gray-500">{t.dashboard.totalThisWeek}</p>
-                </div>
-                <p className="font-semibold text-gray-900">{formatMockTime(7, 51)}</p>
-              </motion.div>
+              {isLoading ? (
+                <>
+                  <WakaTimeCardSkeleton />
+                  <WakaTimeCardSkeleton />
+                  <WakaTimeCardSkeleton />
+                  <WakaTimeCardSkeleton />
+                </>
+              ) : (
+                <>
+                  <motion.div
+                    whileHover={{ y: -2 }}
+                    className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <Calendar className="w-4 h-4 text-gray-400" />
+                      <p className="text-sm text-gray-500">{t.dashboard.startDate}</p>
+                    </div>
+                    <p className="font-semibold text-gray-900">{formatMockDate('2026-01-17', language === 'id')}</p>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ y: -2 }}
+                    className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <Calendar className="w-4 h-4 text-gray-400" />
+                      <p className="text-sm text-gray-500">{t.dashboard.endDate}</p>
+                    </div>
+                    <p className="font-semibold text-gray-900">{formatMockDate('2026-01-23', language === 'id')}</p>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ y: -2 }}
+                    className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <Timer className="w-4 h-4 text-gray-400" />
+                      <p className="text-sm text-gray-500">{t.dashboard.avgDailyCoding}</p>
+                    </div>
+                    <p className="font-semibold text-gray-900">{formatMockTime(1, 34)}</p>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ y: -2 }}
+                    className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <Clock className="w-4 h-4 text-gray-400" />
+                      <p className="text-sm text-gray-500">{t.dashboard.totalThisWeek}</p>
+                    </div>
+                    <p className="font-semibold text-gray-900">{formatMockTime(7, 51)}</p>
+                  </motion.div>
+                </>
+              )}
             </div>
  
             {/* Charts Grid */}
@@ -370,7 +423,11 @@ export default function DashboardPage() {
                   <Timer className="w-4 h-4 text-gray-500" />
                   <h3 className="font-semibold text-gray-900">{t.dashboard.dailyActivity}</h3>
                 </div>
-                <WakaTimeBarChart data={mockWakaTimeData} />
+                {isLoading ? (
+                  <WakaTimeBarChartSkeleton />
+                ) : (
+                  <WakaTimeBarChart data={mockWakaTimeData} />
+                )}
               </motion.div>
  
               {/* Languages Bar */}
@@ -384,7 +441,11 @@ export default function DashboardPage() {
                   <Code2 className="w-4 h-4 text-gray-500" />
                   <h3 className="font-semibold text-gray-900">{t.dashboard.languagesUsed}</h3>
                 </div>
-                <LanguageBar languages={mockWakaTimeData.languages} />
+                {isLoading ? (
+                  <LanguageBarSkeleton />
+                ) : (
+                  <LanguageBar languages={mockWakaTimeData.languages} />
+                )}
               </motion.div>
             </div>
           </div>
