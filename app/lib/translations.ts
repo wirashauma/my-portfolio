@@ -73,6 +73,23 @@ export const translations = {
       technologies: 'Technologies:',
       experiencesList: [
         {
+          id: 3,
+          title: 'AI Backend Engineer',
+          company: 'Flyrank AI',
+          location: 'Sarajevo, Bosnia (Remote)',
+          period: 'July 1, 2026 - Sep 2026',
+          duration: '3 mos',
+          type: 'Internship',
+          mode: 'Remote',
+          description: 'Designed and deployed scalable AI-driven backend services. Responsible for optimization and integration of large language models (LLMs) and vector databases.',
+          achievements: [
+            'Integrated Large Language Models (LLMs) to enhance automated processing pipelines.',
+            'Designed and optimized vector database retrieval workflows (RAG) for search queries.',
+            'Developed scalable API endpoints handling AI inference tasks under remote collaboration.',
+          ],
+          technologies: ['Python', 'FastAPI', 'PostgreSQL', 'LangChain', 'Pinecone', 'Docker', 'AI/LLM'],
+        },
+        {
           id: 1,
           title: 'Full Stack Developer',
           company: 'Howarts Studio',
@@ -89,6 +106,7 @@ export const translations = {
             'Implemented scalable architectures handling 10,000+ daily active users',
             'Led cross-functional collaboration between design, development, and business teams',
           ],
+          technologies: ['Next.js', 'TypeScript', 'Flutter', 'Kotlin', 'Node.js', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
         },
       ],
     },
@@ -273,6 +291,23 @@ export const translations = {
       ctaButton: 'Get in Touch',
       experiencesList: [
         {
+          id: 3,
+          title: 'AI Backend Engineer',
+          company: 'Flyrank AI',
+          location: 'Sarajevo, Bosnia (Remote)',
+          period: 'July 1, 2026 - Sep 2026',
+          duration: '3 mos',
+          type: 'Internship',
+          mode: 'Remote',
+          description: 'Designed and deployed scalable AI-driven backend services. Responsible for optimization and integration of large language models (LLMs) and vector databases.',
+          achievements: [
+            'Integrated Large Language Models (LLMs) to enhance automated processing pipelines.',
+            'Designed and optimized vector database retrieval workflows (RAG) for search queries.',
+            'Developed scalable API endpoints handling AI inference tasks under remote collaboration.',
+          ],
+          technologies: ['Python', 'FastAPI', 'PostgreSQL', 'LangChain', 'Pinecone', 'Docker', 'AI/LLM'],
+        },
+        {
           id: 1,
           title: 'Frontend Developer',
           company: 'Dinas Pendidikan Bukittinggi',
@@ -285,6 +320,7 @@ export const translations = {
             'Led UI/UX improvements increasing user satisfaction by 45%',
             'Mentored 2 junior developers',
           ],
+          technologies: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'TypeScript'],
         },
         {
           id: 2,
@@ -299,6 +335,7 @@ export const translations = {
             'Integrated Stripe payment processing',
             'Built cross-platform solution reducing development time by 40%',
           ],
+          technologies: ['Flutter', 'React Native', 'Supabase', 'Node.js', 'Dart', 'TypeScript'],
         },
       ],
       educationList: [
@@ -410,6 +447,23 @@ export const translations = {
       technologies: 'Teknologi:',
       experiencesList: [
         {
+          id: 3,
+          title: 'AI Backend Engineer',
+          company: 'Flyrank AI',
+          location: 'Sarajevo, Bosnia (Remote)',
+          period: '1 Juli 2026 - Sep 2026',
+          duration: '3 bulan',
+          type: 'Internship',
+          mode: 'Remote',
+          description: 'Merancang dan mendeploy layanan backend berbasis AI yang terukur. Bertanggung jawab atas optimasi dan integrasi large language models (LLMs) dan database vektor.',
+          achievements: [
+            'Mengintegrasikan Large Language Models (LLMs) untuk meningkatkan pipeline pemrosesan otomatis.',
+            'Merancang dan mengoptimalkan alur kerja pencarian database vektor (RAG) untuk kueri pencarian.',
+            'Mengembangkan endpoint API terukur yang menangani tugas inferensi AI di bawah kolaborasi remote.',
+          ],
+          technologies: ['Python', 'FastAPI', 'PostgreSQL', 'LangChain', 'Pinecone', 'Docker', 'AI/LLM'],
+        },
+        {
           id: 1,
           title: 'Full Stack Developer',
           company: 'Howarts Studio',
@@ -426,6 +480,7 @@ export const translations = {
             'Mengimplementasikan arsitektur terukur yang menangani 10.000+ pengguna aktif harian',
             'Memimpin kolaborasi lintas fungsi antara tim desain, pengembangan, dan bisnis',
           ],
+          technologies: ['Next.js', 'TypeScript', 'Flutter', 'Kotlin', 'Node.js', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
         },
       ],
     },
@@ -610,6 +665,23 @@ export const translations = {
       ctaButton: 'Hubungi Saya',
       experiencesList: [
         {
+          id: 3,
+          title: 'AI Backend Engineer',
+          company: 'Flyrank AI',
+          location: 'Sarajevo, Bosnia (Remote)',
+          period: '1 Juli 2026 - Sep 2026',
+          duration: '3 bulan',
+          type: 'Internship',
+          mode: 'Remote',
+          description: 'Merancang dan mendeploy layanan backend berbasis AI yang terukur. Bertanggung jawab atas optimasi dan integrasi large language models (LLMs) dan database vektor.',
+          achievements: [
+            'Mengintegrasikan Large Language Models (LLMs) untuk meningkatkan pipeline pemrosesan otomatis.',
+            'Merancang dan mengoptimalkan alur kerja pencarian database vektor (RAG) untuk kueri pencarian.',
+            'Mengembangkan endpoint API terukur yang menangani tugas inferensi AI di bawah kolaborasi remote.',
+          ],
+          technologies: ['Python', 'FastAPI', 'PostgreSQL', 'LangChain', 'Pinecone', 'Docker', 'AI/LLM'],
+        },
+        {
           id: 1,
           title: 'Frontend Developer',
           company: 'Dinas Pendidikan Bukittinggi',
@@ -622,6 +694,7 @@ export const translations = {
             'Memimpin peningkatan UI/UX meningkatkan kepuasan pengguna sebesar 45%',
             'Membimbing 2 developer junior',
           ],
+          technologies: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'TypeScript'],
         },
         {
           id: 2,
@@ -636,6 +709,7 @@ export const translations = {
             'Mengintegrasikan pemrosesan pembayaran Stripe',
             'Membangun solusi lintas platform mengurangi waktu pengembangan sebesar 40%',
           ],
+          technologies: ['Flutter', 'React Native', 'Supabase', 'Node.js', 'Dart', 'TypeScript'],
         },
       ],
       educationList: [

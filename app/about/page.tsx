@@ -185,7 +185,7 @@ export default function AboutPage() {
     ...exp,
     type: exp.type as Experience['type'],
     mode: exp.mode as Experience['mode'],
-    technologies: ['Next.js', 'TypeScript', 'Flutter', 'Kotlin', 'Node.js', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
+    technologies: exp.technologies || ['Next.js', 'TypeScript', 'Flutter', 'Kotlin', 'Node.js', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
   }));
   
   return (
